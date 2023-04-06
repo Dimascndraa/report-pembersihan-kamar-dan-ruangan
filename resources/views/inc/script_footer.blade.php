@@ -15,7 +15,8 @@ DOC: if you remove pace.js from core please note on Internet Explorer some CSS a
 <script src="/js/app.bundle.js"></script>
 <script type="text/javascript">
 	/* Activate smart panels */
-	$('#js-page-content').smartPanel();
+    $('#js-page-content').smartPanel();
+
 </script>
 
 @yield('plugin')

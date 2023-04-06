@@ -33,7 +33,8 @@
 <link rel="stylesheet" media="screen, print" href="/css/notifications/toastr/toastr.css">
 <link rel="stylesheet" media="screen, print" href="/css/formplugins/bootstrap-colorpicker/bootstrap-colorpicker.css">
 <link rel="stylesheet" media="screen, print" href="/css/formplugins/bootstrap-datepicker/bootstrap-datepicker.css">
-<link rel="stylesheet" media="screen, print" href="/css/formplugins/bootstrap-daterangepicker/bootstrap-daterangepicker.css">
+<link rel="stylesheet" media="screen, print"
+    href="/css/formplugins/bootstrap-daterangepicker/bootstrap-daterangepicker.css">
 <link rel="stylesheet" media="screen, print" href="/css/formplugins/dropzone/dropzone.css">
 <link rel="stylesheet" media="screen, print" href="/css/formplugins/ion-rangeslider/ion-rangeslider.css">
 <link rel="stylesheet" media="screen, print" href="/css/formplugins/cropperjs/cropper.css">
@@ -43,6 +44,8 @@
 <link rel="stylesheet" media="screen, print" href="/css/miscellaneous/lightgallery/lightgallery.bundle.css">
 <link rel="stylesheet" media="screen, print" href="/css/page-invoice.css">
 <link rel="stylesheet" media="screen, print" href="/css/theme-demo.css">
+{{-- SweetAlert2 --}}
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- BEGIN Body -->
 <!-- Possible Classes
 
