@@ -13,7 +13,8 @@
     <nav id="js-primary-nav" class="primary-nav" role="navigation">
         <div class="nav-filter">
             <div class="position-relative">
-                <input type="text" id="nav_filter_input" placeholder="Filter menu" class="form-control" tabindex="0">
+                <input type="text" id="nav_filter_input" placeholder="Filter menu" class="form-control"
+                    tabindex="0">
                 <a href="#" onclick="return false;" class="btn-primary btn-search-close js-waves-off"
                     data-action="toggle" data-class="list-filter-active" data-target=".page-sidebar">
                     <i class="fal fa-chevron-up"></i>
@@ -49,6 +50,18 @@
                     <span class="nav-link-text" data-i18n="nav.application_ruangan">Ruangan</span>
                 </a>
             </li>
+            <li class="{{ set_active('categories') }}">
+                <a href="/categories" title="Kategori" data-filter-tags="application kategori">
+                    <i class="fal fa-home"></i>
+                    <span class="nav-link-text" data-i18n="nav.application_kategori">Kategori Barang</span>
+                </a>
+            </li>
+            <li class="{{ set_active('barang') }}">
+                <a href="/barang" title="Barang" data-filter-tags="application barang">
+                    <i class="fal fa-home"></i>
+                    <span class="nav-link-text" data-i18n="nav.application_barang">Barang</span>
+                </a>
+            </li>
             {{-- <li class="{{ set_active_mainmenu(['ruang', 'tambah_ruang']) }}">
                 <a href="#" title="Ruangan" data-filter-tags="ruangan">
                     <i class="fal fa-window"></i>
@@ -69,14 +82,14 @@
             </li> --}}
 
             <li
-                class="{{ set_active_mainmenu(['intel_analytics_dashboard','intel_marketing_dashboard','intel_introduction','intel_privacy','intel_build_notes']) }}">
+                class="{{ set_active_mainmenu(['intel_analytics_dashboard', 'intel_marketing_dashboard', 'intel_introduction', 'intel_privacy', 'intel_build_notes']) }}">
                 <a href="#" title="Default Menu" data-filter-tags="default menu">
                     <i class="fal fa-info-circle"></i>
                     <span class="nav-link-text" data-i18n="nav.application_intel">Default Menu</span>
                 </a>
                 <ul>
                     <li
-                        class="{{ set_active_mainmenu(['intel_analytics_dashboard','intel_marketing_dashboard','intel_introduction','intel_privacy','intel_build_notes']) }}">
+                        class="{{ set_active_mainmenu(['intel_analytics_dashboard', 'intel_marketing_dashboard', 'intel_introduction', 'intel_privacy', 'intel_build_notes']) }}">
                         <a href="#" title="Application Intel" data-filter-tags="application intel">
                             <i class="fal fa-info-circle"></i>
                             <span class="nav-link-text" data-i18n="nav.application_intel">Application Intel</span>
@@ -106,8 +119,10 @@
                                 </a>
                             </li>
                             <li class="{{ set_active('intel_privacy') }}">
-                                <a href="/intel_privacy" title="Privacy" data-filter-tags="application intel privacy">
-                                    <span class="nav-link-text" data-i18n="nav.application_intel_privacy">Privacy</span>
+                                <a href="/intel_privacy" title="Privacy"
+                                    data-filter-tags="application intel privacy">
+                                    <span class="nav-link-text"
+                                        data-i18n="nav.application_intel_privacy">Privacy</span>
                                 </a>
                             </li>
                             <li class="{{ set_active('intel_build_notes') }}">
@@ -121,7 +136,7 @@
                         </ul>
                     </li>
                     <li
-                        class="{{ set_active_mainmenu(['settings_how_it_works','settings_layout_options','settings_theme_modes','settings_skin_options','settings_saving_db']) }}">
+                        class="{{ set_active_mainmenu(['settings_how_it_works', 'settings_layout_options', 'settings_theme_modes', 'settings_skin_options', 'settings_saving_db']) }}">
                         <a href="#" title="Theme Settings" data-filter-tags="theme settings">
                             <i class="fal fa-cog"></i>
                             <span class="nav-link-text" data-i18n="nav.theme_settings">Theme Settings</span>
@@ -144,7 +159,8 @@
                             <li class="{{ set_active('settings_theme_modes') }}">
                                 <a href="/settings_theme_modes" title="Theme Modes (beta)"
                                     data-filter-tags="theme settings theme modes (beta)">
-                                    <span class="nav-link-text" data-i18n="nav.theme_settings_theme_modes_(beta)">Theme
+                                    <span class="nav-link-text"
+                                        data-i18n="nav.theme_settings_theme_modes_(beta)">Theme
                                         Modes (beta)</span>
                                 </a>
                             </li>
@@ -158,13 +174,15 @@
                             <li class="{{ set_active('settings_saving_db') }}">
                                 <a href="/settings_saving_db" title="Saving to Database"
                                     data-filter-tags="theme settings saving to database">
-                                    <span class="nav-link-text" data-i18n="nav.theme_settings_saving_to_database">Saving
+                                    <span class="nav-link-text"
+                                        data-i18n="nav.theme_settings_saving_to_database">Saving
                                         to Database</span>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li class="{{ set_active_mainmenu(['info_app_docs','info_app_licensing','info_app_flavors']) }}">
+                    <li
+                        class="{{ set_active_mainmenu(['info_app_docs', 'info_app_licensing', 'info_app_flavors']) }}">
                         <a href="#" title="Package Info" data-filter-tags="package info">
                             <i class="fal fa-tag"></i>
                             <span class="nav-link-text" data-i18n="nav.package_info">Package Info</span>
@@ -187,7 +205,8 @@
                             <li class="{{ set_active('info_app_flavors') }}">
                                 <a href="/info_app_flavors" title="Different Flavors"
                                     data-filter-tags="package info different flavors">
-                                    <span class="nav-link-text" data-i18n="nav.package_info_different_flavors">Different
+                                    <span class="nav-link-text"
+                                        data-i18n="nav.package_info_different_flavors">Different
                                         Flavors</span>
                                 </a>
                             </li>
@@ -195,7 +214,7 @@
                     </li>
                     <li class="nav-title">Tools & Components</li>
                     <li
-                        class="{{ set_active_mainmenu(['ui_alerts','ui_accordion','ui_badges','ui_breadcrumbs','ui_buttons','ui_button_group','ui_cards','ui_carousel','ui_collapse','ui_dropdowns','ui_list_filter','ui_modal','ui_navbars','ui_panels','ui_pagination','ui_popovers','ui_progress_bars','ui_scrollspy','ui_side_panel','ui_spinners','ui_tabs_pills','ui_toasts','ui_tooltips']) }}">
+                        class="{{ set_active_mainmenu(['ui_alerts', 'ui_accordion', 'ui_badges', 'ui_breadcrumbs', 'ui_buttons', 'ui_button_group', 'ui_cards', 'ui_carousel', 'ui_collapse', 'ui_dropdowns', 'ui_list_filter', 'ui_modal', 'ui_navbars', 'ui_panels', 'ui_pagination', 'ui_popovers', 'ui_progress_bars', 'ui_scrollspy', 'ui_side_panel', 'ui_spinners', 'ui_tabs_pills', 'ui_toasts', 'ui_tooltips']) }}">
                         <a href="#" title="UI Components" data-filter-tags="ui components">
                             <i class="fal fa-window"></i>
                             <span class="nav-link-text" data-i18n="nav.ui_components">UI Components</span>
@@ -207,7 +226,8 @@
                                 </a>
                             </li>
                             <li class="{{ set_active('ui_accordion') }}">
-                                <a href="/ui_accordion" title="Accordions" data-filter-tags="ui components accordions">
+                                <a href="/ui_accordion" title="Accordions"
+                                    data-filter-tags="ui components accordions">
                                     <span class="nav-link-text"
                                         data-i18n="nav.ui_components_accordions">Accordions</span>
                                 </a>
@@ -253,7 +273,8 @@
                             </li>
                             <li class="{{ set_active('ui_dropdowns') }}">
                                 <a href="/ui_dropdowns" title="Dropdowns" data-filter-tags="ui components dropdowns">
-                                    <span class="nav-link-text" data-i18n="nav.ui_components_dropdowns">Dropdowns</span>
+                                    <span class="nav-link-text"
+                                        data-i18n="nav.ui_components_dropdowns">Dropdowns</span>
                                 </a>
                             </li>
                             <li class="{{ set_active('ui_list_filter') }}">
@@ -279,7 +300,8 @@
                                 </a>
                             </li>
                             <li class="{{ set_active('ui_pagination') }}">
-                                <a href="/ui_pagination" title="Pagination" data-filter-tags="ui components pagination">
+                                <a href="/ui_pagination" title="Pagination"
+                                    data-filter-tags="ui components pagination">
                                     <span class="nav-link-text"
                                         data-i18n="nav.ui_components_pagination">Pagination</span>
                                 </a>
@@ -298,11 +320,13 @@
                             </li>
                             <li class="{{ set_active('ui_scrollspy') }}">
                                 <a href="/ui_scrollspy" title="ScrollSpy" data-filter-tags="ui components scrollspy">
-                                    <span class="nav-link-text" data-i18n="nav.ui_components_scrollspy">ScrollSpy</span>
+                                    <span class="nav-link-text"
+                                        data-i18n="nav.ui_components_scrollspy">ScrollSpy</span>
                                 </a>
                             </li>
                             <li class="{{ set_active('ui_side_panel') }}">
-                                <a href="/ui_side_panel" title="Side Panel" data-filter-tags="ui components side panel">
+                                <a href="/ui_side_panel" title="Side Panel"
+                                    data-filter-tags="ui components side panel">
                                     <span class="nav-link-text" data-i18n="nav.ui_components_side_panel">Side
                                         Panel</span>
                                 </a>
@@ -332,7 +356,7 @@
                         </ul>
                     </li>
                     <li
-                        class="{{ set_active_mainmenu(['utilities_borders','utilities_clearfix','utilities_color_pallet','utilities_display_property','utilities_fonts','utilities_flexbox','utilities_helpers','utilities_position','utilities_responsive_grid','utilities_sizing','utilities_spacing','utilities_typography']) }}">
+                        class="{{ set_active_mainmenu(['utilities_borders', 'utilities_clearfix', 'utilities_color_pallet', 'utilities_display_property', 'utilities_fonts', 'utilities_flexbox', 'utilities_helpers', 'utilities_position', 'utilities_responsive_grid', 'utilities_sizing', 'utilities_spacing', 'utilities_typography']) }}">
                         <a href="#" title="Utilities" data-filter-tags="utilities">
                             <i class="fal fa-bolt"></i>
                             <span class="nav-link-text" data-i18n="nav.utilities">Utilities</span>
@@ -439,7 +463,7 @@
                         </ul>
                     </li>
                     <li
-                        class="{{ set_active_mainmenu(['icons_fontawesome_light','icons_fontawesome_regular','icons_fontawesome_solid','icons_fontawesome_brand','icons_nextgen_general','icons_nextgen_base','icons_stack_showcase','icons_stack_generate']) }}">
+                        class="{{ set_active_mainmenu(['icons_fontawesome_light', 'icons_fontawesome_regular', 'icons_fontawesome_solid', 'icons_fontawesome_brand', 'icons_nextgen_general', 'icons_nextgen_base', 'icons_stack_showcase', 'icons_stack_generate']) }}">
                         <a href="#" title="Font Icons" data-filter-tags="font icons">
                             <i class="fal fa-map-marker-alt"></i>
                             <span class="nav-link-text" data-i18n="nav.font_icons">Font Icons</span>
@@ -448,7 +472,7 @@
                         </a>
                         <ul>
                             <li
-                                class="{{ set_active_mainmenu(['icons_fontawesome_light','icons_fontawesome_regular','icons_fontawesome_solid','icons_fontawesome_brand']) }}">
+                                class="{{ set_active_mainmenu(['icons_fontawesome_light', 'icons_fontawesome_regular', 'icons_fontawesome_solid', 'icons_fontawesome_brand']) }}">
                                 <a href="javascript:void(0);" title="FontAwesome"
                                     data-filter-tags="font icons fontawesome">
                                     <span class="nav-link-text" data-i18n="nav.font_icons_fontawesome">FontAwesome
@@ -485,7 +509,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="{{ set_active_mainmenu(['icons_nextgen_general','icons_nextgen_base']) }}">
+                            <li class="{{ set_active_mainmenu(['icons_nextgen_general', 'icons_nextgen_base']) }}">
                                 <a href="javascript:void(0);" title="NextGen Icons"
                                     data-filter-tags="font icons nextgen icons">
                                     <span class="nav-link-text" data-i18n="nav.font_icons_nextgen_icons">NextGen
@@ -508,7 +532,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="{{ set_active_mainmenu(['icons_stack_showcase','icons_stack_generate']) }}">
+                            <li class="{{ set_active_mainmenu(['icons_stack_showcase', 'icons_stack_generate']) }}">
                                 <a href="javascript:void(0);" title="Stack Icons"
                                     data-filter-tags="font icons stack icons">
                                     <span class="nav-link-text" data-i18n="nav.font_icons_stack_icons">Stack
@@ -534,7 +558,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="{{ set_active_mainmenu(['tables_basic','tables_generate_style']) }}">
+                    <li class="{{ set_active_mainmenu(['tables_basic', 'tables_generate_style']) }}">
                         <a href="#" title="Tables" data-filter-tags="tables">
                             <i class="fal fa-th-list"></i>
                             <span class="nav-link-text" data-i18n="nav.tables">Tables</span>
@@ -542,7 +566,8 @@
                         <ul>
                             <li class="{{ set_active('tables_basic') }}">
                                 <a href="/tables_basic" title="Basic Tables" data-filter-tags="tables basic tables">
-                                    <span class="nav-link-text" data-i18n="nav.tables_basic_tables">Basic Tables</span>
+                                    <span class="nav-link-text" data-i18n="nav.tables_basic_tables">Basic
+                                        Tables</span>
                                 </a>
                             </li>
                             <li class="{{ set_active('tables_generate_style') }}">
@@ -555,7 +580,7 @@
                         </ul>
                     </li>
                     <li
-                        class="{{ set_active_mainmenu(['form_basic_inputs','form_checkbox_radio','form_input_groups','form_validation','form_elements','form_samples']) }}">
+                        class="{{ set_active_mainmenu(['form_basic_inputs', 'form_checkbox_radio', 'form_input_groups', 'form_validation', 'form_elements', 'form_samples']) }}">
                         <a href="#" title="Form Stuff" data-filter-tags="form stuff">
                             <i class="fal fa-edit"></i>
                             <span class="nav-link-text" data-i18n="nav.form_stuff">Form Stuff</span>
@@ -583,8 +608,10 @@
                                 </a>
                             </li>
                             <li class="{{ set_active('form_validation') }}">
-                                <a href="/form_validation" title="Validation" data-filter-tags="form stuff validation">
-                                    <span class="nav-link-text" data-i18n="nav.form_stuff_validation">Validation</span>
+                                <a href="/form_validation" title="Validation"
+                                    data-filter-tags="form stuff validation">
+                                    <span class="nav-link-text"
+                                        data-i18n="nav.form_stuff_validation">Validation</span>
                                 </a>
                             </li>
                             <li class="{{ set_active('form_elements') }}">
@@ -601,7 +628,7 @@
                     </li>
                     <li class="nav-title">Plugins & Addons</li>
                     <li
-                        class="{{ set_active_mainmenu(['plugin_faq','plugin_waves','plugin_pacejs','plugin_smartpanels','plugin_bootbox','plugin_slimscroll','plugin_throttle','plugin_navigation','plugin_i18next','plugin_appcore']) }}">
+                        class="{{ set_active_mainmenu(['plugin_faq', 'plugin_waves', 'plugin_pacejs', 'plugin_smartpanels', 'plugin_bootbox', 'plugin_slimscroll', 'plugin_throttle', 'plugin_navigation', 'plugin_i18next', 'plugin_appcore']) }}">
                         <a href="#" title="Plugins" data-filter-tags="plugins">
                             <i class="fal fa-shield-alt"></i>
                             <span class="nav-link-text" data-i18n="nav.plugins">Core Plugins</span>
@@ -639,7 +666,8 @@
                                 </a>
                             </li>
                             <li class="{{ set_active('plugin_slimscroll') }}">
-                                <a href="/plugin_slimscroll" title="Slimscroll" data-filter-tags="plugins slimscroll">
+                                <a href="/plugin_slimscroll" title="Slimscroll"
+                                    data-filter-tags="plugins slimscroll">
                                     <span class="nav-link-text" data-i18n="nav.plugins_slimscroll">Slimscroll</span>
                                     <span class="dl-ref label bg-primary-700 ml-2">5 KB</span>
                                 </a>
@@ -651,7 +679,8 @@
                                 </a>
                             </li>
                             <li class="{{ set_active('plugin_navigation') }}">
-                                <a href="/plugin_navigation" title="Navigation" data-filter-tags="plugins navigation">
+                                <a href="/plugin_navigation" title="Navigation"
+                                    data-filter-tags="plugins navigation">
                                     <span class="nav-link-text" data-i18n="nav.plugins_navigation">Navigation</span>
                                     <span class="dl-ref label bg-primary-700 ml-2">2 KB</span>
                                 </a>
@@ -671,7 +700,7 @@
                         </ul>
                     </li>
                     <li
-                        class="{{ set_active_mainmenu(['datatables_basic','datatables_autofill','datatables_buttons','datatables_export','datatables_colreorder','datatables_columnfilter','datatables_fixedcolumns','datatables_fixedheader','datatables_keytable','datatables_responsive','datatables_responsive_alt','datatables_rowgroup','datatables_rowreorder','datatables_scroller','datatables_select','datatables_alteditor']) }}">
+                        class="{{ set_active_mainmenu(['datatables_basic', 'datatables_autofill', 'datatables_buttons', 'datatables_export', 'datatables_colreorder', 'datatables_columnfilter', 'datatables_fixedcolumns', 'datatables_fixedheader', 'datatables_keytable', 'datatables_responsive', 'datatables_responsive_alt', 'datatables_rowgroup', 'datatables_rowreorder', 'datatables_scroller', 'datatables_select', 'datatables_alteditor']) }}">
                         <a href="#" title="Datatables" data-filter-tags="datatables datagrid">
                             <i class="fal fa-table"></i>
                             <span class="nav-link-text" data-i18n="nav.datatables">Datatables</span>
@@ -680,7 +709,8 @@
                         </a>
                         <ul>
                             <li class="{{ set_active('datatables_basic') }}">
-                                <a href="/datatables_basic" title="Basic" data-filter-tags="datatables datagrid basic">
+                                <a href="/datatables_basic" title="Basic"
+                                    data-filter-tags="datatables datagrid basic">
                                     <span class="nav-link-text" data-i18n="nav.datatables_basic">Basic</span>
                                 </a>
                             </li>
@@ -705,7 +735,8 @@
                             <li class="{{ set_active('datatables_colreorder') }}">
                                 <a href="/datatables_colreorder" title="ColReorder"
                                     data-filter-tags="datatables datagrid colreorder">
-                                    <span class="nav-link-text" data-i18n="nav.datatables_colreorder">ColReorder</span>
+                                    <span class="nav-link-text"
+                                        data-i18n="nav.datatables_colreorder">ColReorder</span>
                                 </a>
                             </li>
                             <li class="{{ set_active('datatables_columnfilter') }}">
@@ -738,7 +769,8 @@
                             <li class="{{ set_active('datatables_responsive') }}">
                                 <a href="/datatables_responsive" title="Responsive"
                                     data-filter-tags="datatables datagrid responsive">
-                                    <span class="nav-link-text" data-i18n="nav.datatables_responsive">Responsive</span>
+                                    <span class="nav-link-text"
+                                        data-i18n="nav.datatables_responsive">Responsive</span>
                                 </a>
                             </li>
                             <li class="{{ set_active('datatables_responsive_alt') }}">
@@ -757,7 +789,8 @@
                             <li class="{{ set_active('datatables_rowreorder') }}">
                                 <a href="/datatables_rowreorder" title="RowReorder"
                                     data-filter-tags="datatables datagrid rowreorder">
-                                    <span class="nav-link-text" data-i18n="nav.datatables_rowreorder">RowReorder</span>
+                                    <span class="nav-link-text"
+                                        data-i18n="nav.datatables_rowreorder">RowReorder</span>
                                 </a>
                             </li>
                             <li class="{{ set_active('datatables_scroller') }}">
@@ -781,7 +814,7 @@
                         </ul>
                     </li>
                     <li
-                        class="{{ set_active_mainmenu(['statistics_flot','statistics_chartjs','statistics_chartist','statistics_c3','statistics_peity','statistics_sparkline','statistics_easypiechart','statistics_dygraph']) }}">
+                        class="{{ set_active_mainmenu(['statistics_flot', 'statistics_chartjs', 'statistics_chartist', 'statistics_c3', 'statistics_peity', 'statistics_sparkline', 'statistics_easypiechart', 'statistics_dygraph']) }}">
                         <a href="#" title="Statistics" data-filter-tags="statistics chart graphs">
                             <i class="fal fa-chart-pie"></i>
                             <span class="nav-link-text" data-i18n="nav.statistics">Statistics</span>
@@ -847,7 +880,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="{{ set_active_mainmenu(['notifications_sweetalert2','notifications_toastr']) }}">
+                    <li class="{{ set_active_mainmenu(['notifications_sweetalert2', 'notifications_toastr']) }}">
                         <a href="#" title="Notifications" data-filter-tags="notifications">
                             <i class="fal fa-exclamation-circle"></i>
                             <span class="nav-link-text" data-i18n="nav.notifications">Notifications</span>
@@ -862,7 +895,8 @@
                                 </a>
                             </li>
                             <li class="{{ set_active('notifications_toastr') }}">
-                                <a href="/notifications_toastr" title="Toastr" data-filter-tags="notifications toastr">
+                                <a href="/notifications_toastr" title="Toastr"
+                                    data-filter-tags="notifications toastr">
                                     <span class="nav-link-text" data-i18n="nav.notifications_toastr">Toastr</span>
                                     <span class="dl-ref label bg-primary-600 ml-2">5 KB</span>
                                 </a>
@@ -870,7 +904,7 @@
                         </ul>
                     </li>
                     <li
-                        class="{{ set_active_mainmenu(['form_plugins_colorpicker','form_plugins_datepicker','form_plugins_daterange_picker','form_plugins_dropzone','form_plugins_ionrangeslider','form_plugins_inputmask','form_plugin_imagecropper','form_plugin_select2','form_plugin_summernote']) }}">
+                        class="{{ set_active_mainmenu(['form_plugins_colorpicker', 'form_plugins_datepicker', 'form_plugins_daterange_picker', 'form_plugins_dropzone', 'form_plugins_ionrangeslider', 'form_plugins_inputmask', 'form_plugin_imagecropper', 'form_plugin_select2', 'form_plugin_summernote']) }}">
                         <a href="#" title="Form Plugins" data-filter-tags="form plugins">
                             <i class="fal fa-credit-card-front"></i>
                             <span class="nav-link-text" data-i18n="nav.form_plugins">Form Plugins</span>
@@ -913,7 +947,8 @@
                             <li class="{{ set_active('form_plugins_inputmask') }}">
                                 <a href="/form_plugins_inputmask" title="Inputmask"
                                     data-filter-tags="form plugins inputmask">
-                                    <span class="nav-link-text" data-i18n="nav.form_plugins_inputmask">Inputmask</span>
+                                    <span class="nav-link-text"
+                                        data-i18n="nav.form_plugins_inputmask">Inputmask</span>
                                 </a>
                             </li>
                             <li class="{{ set_active('form_plugin_imagecropper') }}">
@@ -924,7 +959,8 @@
                                 </a>
                             </li>
                             <li class="{{ set_active('form_plugin_select2') }}">
-                                <a href="/form_plugin_select2" title="Select2" data-filter-tags="form plugins select2">
+                                <a href="/form_plugin_select2" title="Select2"
+                                    data-filter-tags="form plugins select2">
                                     <span class="nav-link-text" data-i18n="nav.form_plugins_select2">Select2</span>
                                 </a>
                             </li>
@@ -937,7 +973,8 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="{{ set_active_mainmenu(['miscellaneous_fullcalendar','miscellaneous_lightgallery']) }}">
+                    <li
+                        class="{{ set_active_mainmenu(['miscellaneous_fullcalendar', 'miscellaneous_lightgallery']) }}">
                         <a href="#" title="Miscellaneous" data-filter-tags="miscellaneous">
                             <i class="fal fa-globe"></i>
                             <span class="nav-link-text" data-i18n="nav.miscellaneous">Miscellaneous</span>
@@ -962,7 +999,7 @@
                     </li>
                     <li class="nav-title">Layouts & Apps</li>
                     <li
-                        class="{{ set_active_mainmenu(['page_chat','page_contacts','page_forum_list','page_forum_threads','page_forum_discussion','page_inbox_general','page_inbox_read','page_inbox_write','page_invoice','page_forget','page_locked','page_login','page_login_alt','page_register','page_confirmation','page_error','page_error_404','page_error_announced','page_profile','page_search','blank']) }}">
+                        class="{{ set_active_mainmenu(['page_chat', 'page_contacts', 'page_forum_list', 'page_forum_threads', 'page_forum_discussion', 'page_inbox_general', 'page_inbox_read', 'page_inbox_write', 'page_invoice', 'page_forget', 'page_locked', 'page_login', 'page_login_alt', 'page_register', 'page_confirmation', 'page_error', 'page_error_404', 'page_error_announced', 'page_profile', 'page_search', 'blank']) }}">
                         <a href="#" title="Pages" data-filter-tags="pages">
                             <i class="fal fa-plus-circle"></i>
                             <span class="nav-link-text" data-i18n="nav.pages">Page Views</span>
@@ -979,13 +1016,14 @@
                                 </a>
                             </li>
                             <li
-                                class="{{ set_active_mainmenu(['page_forum_list','page_forum_threads','page_forum_discussion']) }}">
+                                class="{{ set_active_mainmenu(['page_forum_list', 'page_forum_threads', 'page_forum_discussion']) }}">
                                 <a href="javascript:void(0);" title="Forum" data-filter-tags="pages forum">
                                     <span class="nav-link-text" data-i18n="nav.pages_forum">Forum</span>
                                 </a>
                                 <ul>
                                     <li class="{{ set_active('page_forum_list') }}">
-                                        <a href="/page_forum_list" title="List" data-filter-tags="pages forum list">
+                                        <a href="/page_forum_list" title="List"
+                                            data-filter-tags="pages forum list">
                                             <span class="nav-link-text" data-i18n="nav.pages_forum_list">List</span>
                                         </a>
                                     </li>
@@ -1006,7 +1044,7 @@
                                 </ul>
                             </li>
                             <li
-                                class="{{ set_active_mainmenu(['page_inbox_general','page_inbox_read','page_inbox_write']) }}">
+                                class="{{ set_active_mainmenu(['page_inbox_general', 'page_inbox_read', 'page_inbox_write']) }}">
                                 <a href="javascript:void(0);" title="Inbox" data-filter-tags="pages inbox">
                                     <span class="nav-link-text" data-i18n="nav.pages_inbox">Inbox</span>
                                 </a>
@@ -1019,12 +1057,14 @@
                                         </a>
                                     </li>
                                     <li class="{{ set_active('page_inbox_read') }}">
-                                        <a href="/page_inbox_read" title="Read" data-filter-tags="pages inbox read">
+                                        <a href="/page_inbox_read" title="Read"
+                                            data-filter-tags="pages inbox read">
                                             <span class="nav-link-text" data-i18n="nav.pages_inbox_read">Read</span>
                                         </a>
                                     </li>
                                     <li class="{{ set_active('page_inbox_write') }}">
-                                        <a href="/page_inbox_write" title="Write" data-filter-tags="pages inbox write">
+                                        <a href="/page_inbox_write" title="Write"
+                                            data-filter-tags="pages inbox write">
                                             <span class="nav-link-text" data-i18n="nav.pages_inbox_write">Write</span>
                                         </a>
                                     </li>
@@ -1038,7 +1078,7 @@
                                 </a>
                             </li>
                             <li
-                                class="{{ set_active_mainmenu(['page_forget','page_locked','page_login','page_login_alt','page_register','page_confirmation']) }}">
+                                class="{{ set_active_mainmenu(['page_forget', 'page_locked', 'page_login', 'page_login_alt', 'page_register', 'page_confirmation']) }}">
                                 <a href="javascript:void(0);" title="Authentication"
                                     data-filter-tags="pages authentication">
                                     <span class="nav-link-text"
@@ -1093,8 +1133,9 @@
                                 </ul>
                             </li>
                             <li
-                                class="{{ set_active_mainmenu(['page_error','page_error_404','page_error_announced']) }}">
-                                <a href="javascript:void(0);" title="Error Pages" data-filter-tags="pages error pages">
+                                class="{{ set_active_mainmenu(['page_error', 'page_error_404', 'page_error_announced']) }}">
+                                <a href="javascript:void(0);" title="Error Pages"
+                                    data-filter-tags="pages error pages">
                                     <span class="nav-link-text" data-i18n="nav.pages_error_pages">Error Pages</span>
                                 </a>
                                 <ul>
@@ -1130,7 +1171,8 @@
                                 </a>
                             </li>
                             <li class="{{ set_active('page_search') }}">
-                                <a href="/page_search" title="Search Results" data-filter-tags="pages search results">
+                                <a href="/page_search" title="Search Results"
+                                    data-filter-tags="pages search results">
                                     <span class="nav-link-text" data-i18n="nav.pages_search_results">Search
                                         Results</span>
                                 </a>
