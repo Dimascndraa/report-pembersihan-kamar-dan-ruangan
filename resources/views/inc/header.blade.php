@@ -46,6 +46,8 @@
 <link rel="stylesheet" media="screen, print" href="/css/theme-demo.css">
 {{-- SweetAlert2 --}}
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{{-- Icons --}}
+<link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
 <!-- BEGIN Body -->
 <!-- Possible Classes
 

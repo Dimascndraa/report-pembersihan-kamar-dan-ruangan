@@ -40,8 +40,8 @@ class BarangCategoryController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'max:255|required',
-            'category_code' => 'max:255|required',
-            'category_number_code' => 'max:255|required',
+            'category_code' => 'max:255|required|unique:barang_categories',
+            'category_number_code' => 'max:255|required|unique:barang_categories',
         ]);
 
         BarangCategory::create($validatedData);
@@ -81,8 +81,8 @@ class BarangCategoryController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'max:255|required',
-            'category_code' => 'max:255|required',
-            'category_number_code' => 'integer|max:255|required',
+            'category_code' => 'max:255|required:unique:barang_categories',
+            'category_number_code' => 'max:255|required:unique:barang_categories',
         ]);
 
         BarangCategory::where('id', $category->id)->update($validatedData);

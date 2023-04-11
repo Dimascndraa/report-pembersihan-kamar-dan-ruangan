@@ -11,8 +11,13 @@ class Barang extends Model
 
     use HasFactory;
 
-    public function category()
+    public function room()
     {
-        return $this->belongsTo(BarangCategory::class);
+        return $this->belongsTo(Room::class);
+    }
+
+    public function template_barang()
+    {
+        return $this->belongsTo(TemplateBarang::class);
     }
 }

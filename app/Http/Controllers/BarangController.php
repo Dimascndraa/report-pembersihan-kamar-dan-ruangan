@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Barang;
 use App\Models\BarangCategory;
+use App\Models\Room;
+use App\Models\TemplateBarang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,7 +20,9 @@ class BarangController extends Controller
     {
         return view('pages.barang.index', [
             'barangs' => Barang::all(),
-            'categories' => BarangCategory::all()
+            'template' => TemplateBarang::all(),
+            'categories' => BarangCategory::all(),
+            'rooms' => Room::all()
         ]);
     }
 
@@ -27,9 +31,10 @@ class BarangController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function pindahkan(Request $request, $id)
     {
-        //
+
+        return $request;
     }
 
     /**
@@ -41,14 +46,11 @@ class BarangController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => "required|max:255",
-            'barang_code' => "required|max:255",
-            'category_id' => "required|max:255",
-            'foto' => "required|max:5120",
-            'merk' => "required|max:5120",
+            'custom_name' => "max:255",
+            'template_barang_id' => "required|max:255",
             'condition' => "required|max:5120",
+            'bidding_year' => "required|max:255",
         ]);
-        $validatedData['foto'] = $request->file('foto')->store('barang');
 
         Barang::create($validatedData);
         return redirect('/barang')->with('success', 'Barang berhasil ditambahkan!');
@@ -85,7 +87,15 @@ class BarangController extends Controller
      */
     public function update(Request $request, Barang $barang)
     {
-        //
+        $validatedData = $request->validate([
+            'custom_name' => "max:255",
+            'template_barang_id' => "required|max:255",
+            'condition' => "required|max:255",
+            'bidding_year' => "required|max:255",
+        ]);
+
+        Barang::where('id', $barang->id)->update($validatedData);
+        return redirect('/barang')->with('success', 'Barang berhasil diubah!');
     }
 
     /**
@@ -96,9 +106,6 @@ class BarangController extends Controller
      */
     public function destroy(Barang $barang)
     {
-        if ($barang->image) {
-            Storage::delete($barang->image);
-        }
         Barang::destroy($barang->id);
         return redirect('/barang')->with('success', 'barang berhasil dihapus!');
     }

@@ -11,8 +11,8 @@ class BarangCategory extends Model
 
     use HasFactory;
 
-    public function barang()
+    public function template_barang()
     {
-        return $this->hasMany(Barang::class);
+        return $this->hasMany(TemplateBarang::class);
     }
 }

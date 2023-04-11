@@ -3,6 +3,7 @@
 use App\Http\Controllers\BarangCategoryController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\TemplateBarangController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +25,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('/rooms', RoomController::class);
     Route::resource('/categories', BarangCategoryController::class);
     Route::resource('/barang', BarangController::class);
+    Route::resource('/template_barang', TemplateBarangController::class);
+    Route::put('/barang/{barang:id}/ruang', [BarangController::class, 'pindahkan']);
+
+    Route::post('/rooms/barang', [RoomController::class, 'storeBarang']);
+    Route::put('/rooms/barang', [RoomController::class, 'updateBarang']);
 });
 
 require __DIR__ . '/auth.php';

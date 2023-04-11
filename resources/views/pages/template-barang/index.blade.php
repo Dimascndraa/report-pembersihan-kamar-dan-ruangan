@@ -1,15 +1,20 @@
 @extends('inc.layout')
-@section('title','Basic')
+@section('title', 'Template Barang')
 @section('content')
 <main id="js-page-content" role="main" class="page-content">
-    @include('inc.breadcrumb',['bcrumb' => 'bc_level_dua','bc_1'=>'Datatables'])
+    @include('inc.breadcrumb', ['bcrumb' => 'bc_level_dua', 'bc_1' => 'Datatables'])
     <div class="subheader">
-        @component('inc.subheader',['subheader_title'=>'st_type_5'])
-        @slot('sh_icon') table @endslot
-        @slot('sh_titile_main') DataTables: <span class='fw-300'>Basic</span> <sup
-            class='badge badge-primary fw-500'>ADDON</sup> @endslot
-        @slot('sh_descipt') Create headache free searching, sorting and pagination tables without any complex
-        configuration @endslot
+        @component('inc.subheader', ['subheader_title' => 'st_type_5'])
+        @slot('sh_icon')
+        table
+        @endslot
+        @slot('sh_titile_main')
+        DataTables: <span class='fw-300'>Template Barang</span> <sup class='badge badge-primary fw-500'>ADDON</sup>
+        @endslot
+        @slot('sh_descipt')
+        Create headache free searching, sorting and pagination tables without any complex
+        configuration
+        @endslot
         @endcomponent
     </div>
     <div class="row mb-5">
@@ -17,7 +22,7 @@
             <button type="button" class="btn btn-primary waves-effect waves-themed" data-toggle="modal"
                 data-target="#default-example-modal-lg">
                 <span class="fal fa-plus-circle mr-1"></span>
-                Tambah Ruang
+                Tambah Template Barang
             </button>
         </div>
     </div>
@@ -27,7 +32,7 @@
             <div id="panel-1" class="panel">
                 <div class="panel-hdr">
                     <h2>
-                        Rooms <span class="fw-300"><i>Table</i></span>
+                        Table <span class="fw-300"><i>Template Barang</i></span>
                     </h2>
                     <div class="panel-toolbar">
                         <button class="btn btn-primary btn-sm" data-toggle="dropdown">Table Style</button>
@@ -402,28 +407,31 @@
                         <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
                             <thead>
                                 <tr>
-                                    <th>Nama Ruang</th>
-                                    <th>Kode Ruang</th>
-                                    <th>Lantai</th>
+                                    <th>Foto</th>
+                                    <th>Nama</th>
+                                    <th>Kode Barang</th>
+                                    <th>Merk</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($rooms as $room)
+                                @foreach ($template as $barang)
                                 <tr>
-                                    <td style="white-space: normal"><a href="/rooms/{{ $room->id }}" class="">{{
-                                            $room->name }}</a></td>
-                                    <td style="white-space: normal">{{ $room->room_code }}</td>
-                                    <td style="white-space: normal">{{ $room->floor }}</td>
+                                    <td style="white-space: normal">{{ $barang->foto }}</td>
+                                    <td style="white-space: normal">{{ $barang->name }}</td>
+                                    <td style="white-space: normal">{{ $barang->barang_code }}</td>
+                                    <td style="white-space: normal">{{ $barang->merk }}</td>
                                     <td style="white-space: normal">
                                         <button type="button" class="badge mx-1 badge-primary p-2 border-0 text-white"
-                                            data-toggle="modal" data-target="#ubah-ruang{{ $room->id }}" title="Ubah">
+                                            data-toggle="modal" data-target="#ubah-barang{{ $barang->id }}"
+                                            title="Ubah">
                                             <span class="fal fa-pencil mr-1"></span>
                                         </button>
-                                        <form action="/rooms/{{ $room->id }}" method="POST" class="d-inline">
+                                        <form action="/template_barang/{{ $barang->id }}" method="POST"
+                                            class="d-inline">
                                             @method('delete')
                                             @csrf
-                                            <button title="Hapus Ruang" class="badge mx-1 badge-danger p-2 border-0"
+                                            <button title="Hapus Barang" class="badge mx-1 badge-danger p-2 border-0"
                                                 onclick="return confirm('Anda takin?')">
                                                 <i class="fas fa-trash"></i>
                                             </button>
@@ -431,16 +439,17 @@
                                     </td>
                                 </tr>
 
-                                <div class="modal fade" id="ubah-ruang{{ $room->id }}" tabindex="-1" role="dialog"
+                                <div class="modal fade" id="ubah-barang{{ $barang->id }}" tabindex="-1" role="dialog"
                                     aria-hidden="true">
                                     <div class="modal-dialog modal-lg" role="document">
                                         <div class="modal-content">
-                                            <form autocomplete="off" novalidate action="/rooms/{{ $room->id }}"
-                                                method="post">
+                                            <form autocomplete="off" novalidate
+                                                action="/template_barang/{{ $barang->id }}" method="post"
+                                                enctype="multipart/form-data">
                                                 @method('put')
                                                 @csrf
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title">Ubah Ruang</h5>
+                                                    <h5 class="modal-title">Ubah Template</h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true"><i class="fal fa-times"></i></span>
@@ -448,31 +457,69 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="form-group">
-                                                        <label for="name">Nama Ruang</label>
-                                                        <input type="text" value="{{ old('name', $room->name) }}"
+                                                        <label for="name">Gambar</label>
+                                                        <input type="hidden" name="oldImage"
+                                                            value="{{ $barang->foto }}">
+                                                        @if ($barang->foto)
+                                                        <img src="{{ asset('storage/' . $barang->foto) }}"
+                                                            class="image-preview img-fluid mb-3 col-sm-5 d-block">
+                                                        @else
+                                                        <img class="image-preview img-fluid mb-3 col-sm-5 d-block">
+                                                        @endif
+                                                        <div class="custom-file">
+                                                            <input type="file" class="custom-file-input" id="foto"
+                                                                name="foto" onchange="previewImage()">
+                                                            <label class="custom-file-label" for="foto">Pilih
+                                                                Gambar Galeri</label>
+                                                        </div>
+                                                        @error('foto')
+                                                        <p class="text-danger">{{ $message }}</p>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="name">Nama Barang</label>
+                                                        <input type="text" value="{{ old('name', $barang->name) }}"
                                                             class="form-control @error('name') is-invalid @enderror"
-                                                            id="name" name="name" placeholder="Nama Ruang">
+                                                            id="name" name="name" placeholder="Nama Barang">
                                                         @error('name')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="room_code">Kode Ruang</label>
+                                                        <label for="barang_code">Kode Barang</label>
                                                         <input type="text"
-                                                            value="{{ old('room_code', $room->room_code) }}"
-                                                            class="form-control @error('room_code') is-invalid @enderror"
-                                                            id="room_code" name="room_code" placeholder="Kode Ruang"
+                                                            value="{{ old('barang_code', $barang->barang_code) }}"
+                                                            class="form-control @error('barang_code') is-invalid @enderror"
+                                                            id="barang_code" name="barang_code"
+                                                            placeholder="Kode Barang"
                                                             onkeyup="this.value = this.value.toUpperCase()">
-                                                        @error('room_code')
+                                                        @error('barang_code')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="floor">Lantai</label>
-                                                        <input type="number" value="{{ old('floor', $room->floor) }}"
-                                                            class="form-control @error('floor') is-invalid @enderror"
-                                                            id="floor" name="floor" placeholder="Lantai">
-                                                        @error('floor')
+                                                        <label for="merk">Merek Barang</label>
+                                                        <input type="text" value="{{ old('merk', $barang->merk) }}"
+                                                            class="form-control @error('merk') is-invalid @enderror"
+                                                            id="merk" name="merk" placeholder="Merek Barang">
+                                                        @error('merk')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="condition">Kondisi Barang</label>
+                                                        <select
+                                                            class="form-control w-100 @error('condition') is-invalid @enderror"
+                                                            id="single-default" name="condition">
+                                                            <optgroup label="Kondisi Barang">
+                                                                <option value="Baik" {{ $barang->condition === "Baik" ?
+                                                                    "selected" : '' }}>Baik</option>
+                                                                <option value="Rusak" {{ $barang->condition === "Rusak"
+                                                                    ?
+                                                                    "selected" : '' }}>Rusak</option>
+                                                            </optgroup>
+                                                        </select>
+                                                        @error('condition')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
                                                     </div>
@@ -493,9 +540,10 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Nama Ruang</th>
-                                    <th>Kode Ruang</th>
-                                    <th>Lantai</th>
+                                    <th>Foto</th>
+                                    <th>Nama Barang</th>
+                                    <th>Kode Barang</th>
+                                    <th>Merk</th>
                                     <th>Aksi</th>
                                 </tr>
                             </tfoot>
@@ -511,39 +559,68 @@
 <div class="modal fade" id="default-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <form autocomplete="off" novalidate action="/rooms" method="post">
+            <form autocomplete="off" novalidate action="/template_barang" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title">Tambah Ruang</h5>
+                    <h5 class="modal-title">Tambah Barang</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"><i class="fal fa-times"></i></span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="name">Nama Ruang</label>
+                        <label for="foto2">Gambar</label>
+                        <img class="image-preview2 img-fluid mb-3 col-sm-5 d-block">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="foto2" name="foto"
+                                onchange="previewImage2()">
+                            <label class="custom-file-label" for="foto">Pilih Gambar Galeri</label>
+                        </div>
+                        @error('foto')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label class="form-label" for="single-default">
+                                Kategori Barang
+                            </label>
+                            <select class="form-control w-100 @error('category_id') is-invalid @enderror"
+                                id="single-default" name="category_id">
+                                <optgroup label="Kategori Barang">
+                                    @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
+                                </optgroup>
+                            </select>
+                            @error('category_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <label for="name">Nama Barang</label>
                         <input type="text" value="{{ old('name') }}"
                             class="form-control @error('name') is-invalid @enderror" id="name" name="name"
-                            placeholder="Nama Ruang">
+                            placeholder="Nama Barang">
                         @error('name')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="room_code">Kode Ruang</label>
-                        <input type="text" value="{{ old('room_code') }}"
-                            class="form-control @error('room_code') is-invalid @enderror" id="room_code"
-                            name="room_code" placeholder="Kode Ruang" onkeyup="this.value = this.value.toUpperCase()">
-                        @error('room_code')
+                        <label for="barang_code">Kode Barang</label>
+                        <input type="text" value="{{ old('barang_code') }}"
+                            class="form-control @error('barang_code') is-invalid @enderror" id="barang_code"
+                            name="barang_code" placeholder="Kode Barang"
+                            onkeyup="this.value = this.value.toUpperCase()">
+                        @error('barang_code')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="floor">Lantai</label>
-                        <input type="number" value="{{ old('floor') }}"
-                            class="form-control @error('floor') is-invalid @enderror" id="floor" name="floor"
-                            placeholder="Lantai">
-                        @error('floor')
+                        <label for="merk">Merek Barang</label>
+                        <input type="text" value="{{ old('merk') }}"
+                            class="form-control @error('merk') is-invalid @enderror" id="merk" name="merk"
+                            placeholder="Merek Barang">
+                        @error('merk')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
@@ -564,29 +641,52 @@
 <script src="/js/datagrid/datatables/datatables.bundle.js"></script>
 <script>
     /* demo scripts for change table color */
-            /* change background */
-            $(document).ready(function()
-            {
-                $('#dt-basic-example').dataTable(
-                {
-                    responsive: true
-                });
-
-                $('.js-thead-colors a').on('click', function()
-                {
-                    var theadColor = $(this).attr("data-bg");
-                    console.log(theadColor);
-                    $('#dt-basic-example thead').removeClassPrefix('bg-').addClass(theadColor);
-                });
-
-                $('.js-tbody-colors a').on('click', function()
-                {
-                    var theadColor = $(this).attr("data-bg");
-                    console.log(theadColor);
-                    $('#dt-basic-example').removeClassPrefix('bg-').addClass(theadColor);
-                });
-
+        /* change background */
+        $(document).ready(function() {
+            $('#dt-basic-example').dataTable({
+                responsive: true
             });
 
+            $('.js-thead-colors a').on('click', function() {
+                var theadColor = $(this).attr("data-bg");
+                console.log(theadColor);
+                $('#dt-basic-example thead').removeClassPrefix('bg-').addClass(theadColor);
+            });
+
+            $('.js-tbody-colors a').on('click', function() {
+                var theadColor = $(this).attr("data-bg");
+                console.log(theadColor);
+                $('#dt-basic-example').removeClassPrefix('bg-').addClass(theadColor);
+            });
+
+        });
+
+        function previewImage() {
+            const image = document.querySelector('#foto');
+            const imgPreview = document.querySelector('.image-preview')
+
+            imgPreview.style.display = 'block';
+
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(image.files[0])
+
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            }
+        }
+
+        function previewImage2() {
+            const image = document.querySelector('#foto2');
+            const imgPreview = document.querySelector('.image-preview2')
+
+            imgPreview.style.display = 'block';
+
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(image.files[0])
+
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            }
+        }
 </script>
 @endsection
