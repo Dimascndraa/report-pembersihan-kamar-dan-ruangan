@@ -53,7 +53,7 @@ class BarangController extends Controller
         ]);
 
         Barang::create($validatedData);
-        return redirect('/barang')->with('success', 'Barang berhasil ditambahkan!');
+        return redirect('/daftar_rekam_medis')->with('success', 'Pasien berhasil ditambahkan!');
     }
 
     /**
