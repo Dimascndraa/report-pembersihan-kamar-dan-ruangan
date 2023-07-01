@@ -67,6 +67,12 @@
                     <span class="nav-link-text" data-i18n="nav.application_barang">Barang</span>
                 </a>
             </li>
+            <li class="{{ set_active('user') }}">
+                <a href="/user" title="User" data-filter-tags="application user">
+                    <i class="fal fa-cube"></i>
+                    <span class="nav-link-text" data-i18n="nav.application_user">User</span>
+                </a>
+            </li>
             {{-- <li class="{{ set_active_mainmenu(['ruang', 'tambah_ruang']) }}">
                 <a href="#" title="Ruangan" data-filter-tags="ruangan">
                     <i class="fal fa-window"></i>

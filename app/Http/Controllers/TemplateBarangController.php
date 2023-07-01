@@ -46,7 +46,7 @@ class TemplateBarangController extends Controller
             'name' => "required|max:255",
             'barang_code' => "required|max:255",
             'foto' => "required|max:5120",
-            'merk' => "required|max:5120",
+            'merk' => "max:5120",
         ]);
         $validatedData['foto'] = $request->file('foto')->store('barang');
 

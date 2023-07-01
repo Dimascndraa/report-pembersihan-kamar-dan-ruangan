@@ -407,7 +407,7 @@
                         <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
                             <thead>
                                 <tr>
-                                    <th>Foto</th>
+                                    {{-- <th>Foto</th> --}}
                                     <th>Nama Barang</th>
                                     <th>Kategori Barang</th>
                                     <th>Merk</th>
@@ -479,7 +479,7 @@
                                 </div>
 
                                 <tr>
-                                    <td style="white-space: normal">{{ $barang->template_barang->foto }}</td>
+                                    {{-- <td style="white-space: normal">{{ $barang->template_barang->foto }}</td> --}}
                                     @if ($barang->custom_name === null)
                                     <td style="white-space: normal">{{ $barang->template_barang->name }}</td>
                                     @else
@@ -654,7 +654,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Foto</th>
+                                    {{-- <th>Foto</th> --}}
                                     <th>Nama Barang</th>
                                     <th>Kategori Barang</th>
                                     <th>Merk</th>

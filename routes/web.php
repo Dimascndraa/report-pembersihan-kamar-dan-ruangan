@@ -4,6 +4,7 @@ use App\Http\Controllers\BarangCategoryController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\TemplateBarangController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +31,10 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/rooms/barang', [RoomController::class, 'storeBarang']);
     Route::put('/rooms/barang', [RoomController::class, 'updateBarang']);
+
+    Route::resource('/user', UserController::class);
+    Route::put('/user/{user:id}/pindah', [UserController::class, 'pindahkan']);
+    Route::put('/user/{user:id}/update-password', [UserController::class, 'updatePassword']);
 });
 
 require __DIR__ . '/auth.php';
