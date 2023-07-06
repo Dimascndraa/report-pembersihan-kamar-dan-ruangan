@@ -502,6 +502,11 @@
                                             title="ke Ruangan">
                                             <span class="fal fa-arrow-circle-right"></span>
                                         </button>
+                                        <button type="button" class="badge mx-1 badge-secondary p-2 border-0 text-white"
+                                            data-toggle="modal" data-target="#ubah-akses{{ $user->id }}"
+                                            title="Ubah Akses">
+                                            <span class="fal fa-user-secret"></span>
+                                        </button>
                                     </td>
                                 </tr>
 
@@ -614,6 +619,49 @@
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
                                                     </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">
+                                                        <span class="fal fa-pencil mr-1"></span>
+                                                        Ubah
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" id="ubah-akses{{ $user->id }}" tabindex="-1" role="dialog"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <form autocomplete="off" novalidate action="/user/{{ $user->id }}/akses"
+                                                method="post" enctype="multipart/form-data">
+                                                @method('put')
+                                                @csrf
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Ubah Akses</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <select
+                                                        class="form-control w-100 @error('is_admin') is-invalid @enderror"
+                                                        id="single-default" name="is_admin">
+                                                        <optgroup label="User Akses">
+                                                            <option value="0" {{ $user->is_admin == "0" ? "selected" :
+                                                                "" }}>User</option>
+                                                            <option value="1" {{ $user->is_admin == "1" ? "selected" :
+                                                                "" }}>Administrator</option>
+                                                        </optgroup>
+                                                    </select>
+                                                    @error('is_admin')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"

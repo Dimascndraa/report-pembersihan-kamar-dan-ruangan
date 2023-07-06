@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->foreignId('room_id')->nullable();
             $table->string('name');
+            $table->string('is_admin')->default(0);
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('password');

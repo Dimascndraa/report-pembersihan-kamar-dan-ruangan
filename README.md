@@ -69,3 +69,5 @@ Setelah semua sudah berhasil, langkah selanjutnya jalankan local server dengan p
 ```
 php artisan serve
 ```
+
+## dibuat oleh: Dimas Candra & Chat GPT

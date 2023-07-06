@@ -2,22 +2,17 @@
 use App\Models\Barang;
 @endphp
 @extends('inc.layout')
-@section('title', 'Basic')
+@section('title', 'Ruangan')
 @section('content')
 <main id="js-page-content" role="main" class="page-content">
-    @include('inc.breadcrumb', ['bcrumb' => 'bc_level_dua', 'bc_1' => 'Datatables'])
+    @include('inc.breadcrumb',['bcrumb' => 'bc_level_dua','bc_1'=>'Datatables'])
     <div class="subheader">
-        @component('inc.subheader', ['subheader_title' => 'st_type_5'])
-        @slot('sh_icon')
-        table
-        @endslot
-        @slot('sh_titile_main')
-        DataTables: <span class='fw-300'>Basic</span> <sup class='badge badge-primary fw-500'>ADDON</sup>
-        @endslot
-        @slot('sh_descipt')
-        Create headache free searching, sorting and pagination tables without any complex
-        configuration
-        @endslot
+        @component('inc.subheader',['subheader_title'=>'st_type_5'])
+        @slot('sh_icon') table @endslot
+        @slot('sh_titile_main') DataTables: <span class='fw-300'>Ruangan</span> <sup
+            class='badge badge-primary fw-500'>ADDON</sup> @endslot
+        @slot('sh_descipt') Create headache free searching, sorting and pagination tables without any complex
+        configuration @endslot
         @endcomponent
     </div>
     <div class="row mb-5">
@@ -427,13 +422,10 @@ use App\Models\Barang;
                                     <td><a href="/barang/{{ $barang->id }}" class="mx-1 p-2 text-black">{{
                                             $barang->template_barang->name }}</a></td>
                                     <td>{{ $barang->template_barang->merk }}</td>
-                                    <td>{{ $barang->category->name }}</td>
+                                    <td>{{ $barang->template_barang->category->name }}</td>
                                     <td>{{ $barang->condition }}</td>
                                     <td>{{ $barang->room->name }}</td>
-                                    <td>{{ $barang->room->room_code }}.{{ $barang->room->floor }}.{{
-                                        $barang->category->category_number_code }}.{{ $barang->barang_code }}.{{
-                                        $barang->bidding_year }}
-                                    </td>
+                                    <td>{{ $barang->item_code }}</td>
                                     <td>
                                         <a href="/dashboard/barang/{{ $barang->id }}/edit"
                                             class="badge mx-1 bg-warning p-2">
@@ -494,7 +486,7 @@ use App\Models\Barang;
                         <select class="form-control w-100 @error('category_id') is-invalid @enderror"
                             id="single-default" name="category_id">
                             @foreach ($categories as $category)
-                            @php $barangs = Barang::where('category_id', $category->id)->get() @endphp
+                            {{-- @php $barangs = Barang::where('category_id', $category->id)->get() @endphp --}}
                             <optgroup label="{{ $category->name }}">
                                 @foreach ($barangs as $barang)
                                 <option value="{{ $barang->id }}">{{ $barang->template_barang->name }}</option>
@@ -565,12 +557,32 @@ use App\Models\Barang;
 @endsection
 @section('plugin')
 <script src="/js/datagrid/datatables/datatables.bundle.js"></script>
+<script src="/js/datatable/jszip.min.js"></script>
+
 <script>
     /* demo scripts for change table color */
         /* change background */
         $(document).ready(function() {
             $('#dt-basic-example').dataTable({
-                responsive: true
+                responsive: true,
+                dom: 'Bfrtip',
+                buttons: [{
+                        extend: 'print',
+                        text: 'Print',
+                        className: 'float-right btn btn-primary',
+                        exportOptions: {
+                            columns: ':not(.no-export)'
+                        },
+                    },
+                    {
+                        extend: 'excel',
+                        text: 'Download as Excel',
+                        className: 'float-right btn btn-success',
+                        exportOptions: {
+                            columns: ':not(.no-export)'
+                        }
+                    }
+                ]
             });
 
             $('.js-thead-colors a').on('click', function() {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\DefaultController;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\ControlPanel;
 
 class IntelController extends Controller
 {
@@ -13,7 +14,9 @@ class IntelController extends Controller
     }
     public function dashboard()
     {
-        return view('pages.default-menu.intel.intel_analytics_dashboard');
+        return view('pages.default-menu.intel.intel_analytics_dashboard', [
+            'i' => ControlPanel::all()->first()
+        ]);
     }
     public function intel_marketing_dashboard()
     {

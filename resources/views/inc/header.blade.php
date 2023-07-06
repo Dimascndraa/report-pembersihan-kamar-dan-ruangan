@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <title>
-    @yield('title','My App') - @yield('mywebname','SmartAdmin')
+    @yield('title','My App')
 </title>
 <meta name="description" content="Analytics Dashboard">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">

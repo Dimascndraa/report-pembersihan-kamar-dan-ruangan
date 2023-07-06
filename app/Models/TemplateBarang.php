@@ -11,6 +11,8 @@ class TemplateBarang extends Model
 
     protected $guarded = ['id'];
 
+    protected $with = ['category'];
+
     public function barang()
     {
         return $this->hasMany(Barang::class);

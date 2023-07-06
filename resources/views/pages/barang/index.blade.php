@@ -1,3 +1,7 @@
+@php
+use App\Models\Room;
+@endphp
+
 @extends('inc.layout')
 @section('title', 'Barang')
 @section('content')
@@ -408,11 +412,13 @@
                             <thead>
                                 <tr>
                                     {{-- <th>Foto</th> --}}
+                                    <th>No</th>
                                     <th>Nama Barang</th>
                                     <th>Kategori Barang</th>
-                                    <th>Merk</th>
-                                    <th>Kondisi</th>
-                                    <th>Tahun Pengadaan</th>
+                                    <th>Urutan Barang</th>
+                                    <th>Kode Barang</th>
+                                    {{-- <th>Kondisi</th> --}}
+                                    {{-- <th>Tahun Pengadaan</th> --}}
                                     <th>Ruangan</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -438,6 +444,11 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
+                                                    <input type="hidden" name="instance_code"
+                                                        value="{{ $i->instance_code }}">
+                                                    <input type="hidden" name="category_code"
+                                                        value="{{ $barang->template_barang->category->category_code }}">
+                                                    <input type="hidden" name="barang_id" value="{{ $barang->id }}">
                                                     <div class="form-group">
                                                         <label for="room_id">Nama Ruang</label>
                                                         <select
@@ -469,8 +480,127 @@
                                                     <button type="button" class="btn btn-secondary"
                                                         data-dismiss="modal">Close</button>
                                                     <button type="submit" class="btn btn-primary">
-                                                        <span class="fal fa-pencil mr-1"></span>
-                                                        Ubah
+                                                        <span class="fal fa-arrow-circle-right mr-1"></span>
+                                                        Pindahkan
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" id="pinjam{{ $barang->id }}" tabindex="-1" role="dialog"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <form autocomplete="off" novalidate
+                                                action="/barang/{{ $barang->id }}/pinjam" method="post"
+                                                enctype="multipart/form-data">
+                                                @method('put')
+                                                @csrf
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Pindahkan @if($barang->custom_name === null)
+                                                        {{ $barang->template_barang->name }} @else {{
+                                                        $barang->custom_name }} @endif ke Ruang</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <label for="ruang_pinjam">Nama Ruang</label>
+                                                        <select
+                                                            class="form-control w-100 @error('ruang_pinjam') is-invalid @enderror"
+                                                            id="single-default" name="ruang_pinjam">
+                                                            <optgroup label="Ruangan">
+                                                                @foreach ($rooms as $room)
+                                                                @if (old("ruang_pinjam") == $room->id ||
+                                                                $room->ruang_pinjam == $room->id)
+                                                                <option value="{{ $room->id }}" selected>{{
+                                                                    $room->name }}</option>
+                                                                @else
+                                                                <option value="{{ $room->id }}">{{ $room->name
+                                                                    }}
+                                                                </option>
+                                                                @endif
+                                                                @endforeach
+                                                                @error('ruang_pinjam')
+                                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                                @enderror
+                                                            </optgroup>
+                                                        </select>
+                                                        @error('ruang_pinjam')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">
+                                                        <span class="fal fa-arrow-circle-right mr-1"></span>
+                                                        Pinjam
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" id="kembali{{ $barang->id }}" tabindex="-1" role="dialog"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <form autocomplete="off" novalidate
+                                                action="/barang/{{ $barang->id }}/kembali" method="post"
+                                                enctype="multipart/form-data">
+                                                @method('put')
+                                                @csrf
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Kembalikan @if($barang->custom_name ===
+                                                        null)
+                                                        {{ $barang->template_barang->name }} @else {{
+                                                        $barang->custom_name }} @endif</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <label for="ruang_pinjam">Nama Ruang</label>
+                                                        <select
+                                                            class="form-control w-100 @error('ruang_pinjam') is-invalid @enderror"
+                                                            id="single-default" name="ruang_pinjam">
+                                                            <optgroup label="Ruangan">
+                                                                @foreach ($rooms as $room)
+                                                                @if (old("ruang_pinjam") == $room->id ||
+                                                                $room->ruang_pinjam == $room->id)
+                                                                <option value="{{ $room->id }}" selected>{{
+                                                                    $room->name }}</option>
+                                                                @else
+                                                                <option value="{{ $room->id }}">{{ $room->name
+                                                                    }}
+                                                                </option>
+                                                                @endif
+                                                                @endforeach
+                                                                @error('ruang_pinjam')
+                                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                                @enderror
+                                                            </optgroup>
+                                                        </select>
+                                                        @error('room_id')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">
+                                                        <span class="fal fa-arrow-circle-left mr-1"></span>
+                                                        Kembalikan
                                                     </button>
                                                 </div>
                                             </form>
@@ -479,7 +609,7 @@
                                 </div>
 
                                 <tr>
-                                    {{-- <td style="white-space: normal">{{ $barang->template_barang->foto }}</td> --}}
+                                    <td style="white-space: normal">{{ $loop->iteration }}</td>
                                     @if ($barang->custom_name === null)
                                     <td style="white-space: normal">{{ $barang->template_barang->name }}</td>
                                     @else
@@ -487,13 +617,21 @@
                                     @endif
                                     <td style="white-space: normal">{{
                                         $barang->template_barang->category->name }}</td>
-                                    <td style="white-space: normal">{{ $barang->template_barang->merk }}</td>
-                                    <td style="white-space: normal">{{ $barang->condition }}</td>
-                                    <td style="white-space: normal">{{ $barang->bidding_year }}</td>
+                                    <td style="white-space: normal">{{ $barang->urutan_barang }}</td>
+                                    <td style="white-space: normal">{{ $barang->item_code }}</td>
+                                    {{-- <td style="white-space: normal">{{ $barang->condition }}</td> --}}
+                                    {{-- <td style="white-space: normal">{{ $barang->bidding_year }}</td> --}}
                                     @if ($barang->room === null)
                                     <td style="white-space: normal">*Barang belum di Ruangan</td>
                                     @else
-                                    <td style="white-space: normal">{{ $barang->room->name }}</td>
+                                    @if($barang->pinjam == true)
+                                    <td style="white-space: normal">Barang dipinjam ke ruang {{ Room::where('id',
+                                        $barang->ruang_pinjam)->first()->name }}
+                                    </td>
+                                    @else
+                                    <td style="white-space: normal"><a href="/rooms/{{ $barang->room->id }}" class="">{{
+                                            $barang->room->name }}</a></td>
+                                    @endif
                                     @endif
                                     <td style="white-space: normal">
                                         <button type="button" class="badge mx-1 badge-primary p-2 border-0 text-white"
@@ -509,11 +647,23 @@
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </form>
-                                        @if ($barang->room === null)
-                                        <button type="button" class="badge mx-1 badge-success p-2 border-0 text-white"
+                                        <button type="button" class="badge mx-1 badge-secondary p-2 border-0 text-white"
                                             data-toggle="modal" data-target="#ruangan{{ $barang->id }}"
-                                            title="ke Ruangan">
+                                            title="Pindahkan">
+                                            <span class="fal fa-sign-in"></span>
+                                        </button>
+                                        @if ($barang->pinjam == false && $barang->room != null)
+                                        <button type="button" class="badge mx-1 badge-success p-2 border-0 text-white"
+                                            data-toggle="modal" data-target="#pinjam{{ $barang->id }}"
+                                            title="Pinjamkan">
                                             <span class="fal fa-arrow-circle-right"></span>
+                                        </button>
+                                        @endif
+                                        @if ($barang->pinjam == true && $barang->room != null)
+                                        <button type="button" class="badge mx-1 badge-success p-2 border-0 text-white"
+                                            data-toggle="modal" data-target="#kembali{{ $barang->id }}"
+                                            title="Kembalikan">
+                                            <span class="fal fa-arrow-circle-left"></span>
                                         </button>
                                         @endif
                                     </td>
@@ -544,6 +694,16 @@
                                                             id="custom_name" name="custom_name"
                                                             placeholder="Nama Barang">
                                                         @error('custom_name')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="item_code">Kode Barang</label>
+                                                        <input type="text"
+                                                            value="{{ old('item_code', $barang->item_code) }}"
+                                                            class="form-control @error('item_code') is-invalid @enderror"
+                                                            id="item_code" name="item_code" placeholder="Kode Barang">
+                                                        @error('item_code')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
                                                     </div>
@@ -654,12 +814,13 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    {{-- <th>Foto</th> --}}
+                                    <th>No</th>
                                     <th>Nama Barang</th>
                                     <th>Kategori Barang</th>
-                                    <th>Merk</th>
-                                    <th>Kondisi</th>
-                                    <th>Tahun Pengadaan</th>
+                                    <th>Urutan Barang</th>
+                                    <th>Kode Barang</th>
+                                    {{-- <th>Kondisi</th> --}}
+                                    {{-- <th>Tahun Pengadaan</th> --}}
                                     <th>Ruangan</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -678,6 +839,11 @@
         <div class="modal-content">
             <form autocomplete="off" novalidate action="/barang" method="post" enctype="multipart/form-data">
                 @csrf
+                @if (!auth()->user()->is_admin)
+                <input type="hidden" name="instance_code" value="{{ $i->instance_code }}">
+                <input type="hidden" name="room_id" value="{{ auth()->user()->room_id }}">
+                @endif
+
                 <div class="modal-header">
                     <h5 class="modal-title">Tambah Barang</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

@@ -1,5 +1,9 @@
+@php
+use App\Models\Room;
+@endphp
+
 @extends('inc.layout')
-@section('title', 'Kategori Barang')
+@section('title', 'Barang')
 @section('content')
 <main id="js-page-content" role="main" class="page-content">
     @include('inc.breadcrumb', ['bcrumb' => 'bc_level_dua', 'bc_1' => 'Datatables'])
@@ -9,7 +13,7 @@
         table
         @endslot
         @slot('sh_titile_main')
-        DataTables: <span class='fw-300'>Kategori Barang</span> <sup class='badge badge-primary fw-500'>ADDON</sup>
+        DataTables: <span class='fw-300'>Barang</span> <sup class='badge badge-primary fw-500'>ADDON</sup>
         @endslot
         @slot('sh_descipt')
         Create headache free searching, sorting and pagination tables without any complex
@@ -17,22 +21,13 @@
         @endslot
         @endcomponent
     </div>
-    <div class="row mb-5">
-        <div class="col-xl-12">
-            <button type="button" class="btn btn-primary waves-effect waves-themed" data-toggle="modal"
-                data-target="#default-example-modal-lg">
-                <span class="fal fa-plus-circle mr-1"></span>
-                Tambah Kategori Barang
-            </button>
-        </div>
-    </div>
 
     <div class="row">
         <div class="col-xl-12">
             <div id="panel-1" class="panel">
                 <div class="panel-hdr">
                     <h2>
-                        Table <span class="fw-300"><i>Kategori Barang</i></span>
+                        Table <span class="fw-300"><i>Barang</i></span>
                     </h2>
                     <div class="panel-toolbar">
                         <button class="btn btn-primary btn-sm" data-toggle="dropdown">Table Style</button>
@@ -407,29 +402,30 @@
                         <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
                             <thead>
                                 <tr>
-                                    <th>Nama Kategori</th>
-                                    <th>Kode Kategori</th>
-                                    <th>Kode Angka</th>
+                                    {{-- <th>Foto</th> --}}
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th>Kategori</th>
+                                    <th>Kode Barang</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($categories as $category)
+                                @foreach ($items as $item)
                                 <tr>
-                                    <td style="white-space: normal"><a href="categories/{{ $category->id }}">{{
-                                            $category->name }}</a></td>
-                                    <td style="white-space: normal">{{ $category->category_code }}</td>
-                                    <td style="white-space: normal">{{ $category->category_number_code }}</td>
+                                    <td style="white-space: normal">{{ $loop->iteration }}</td>
+                                    <td style="white-space: normal">{{ $item->name }}</td>
+                                    <td style="white-space: normal">{{ $item->category->name }}</td>
+                                    <td style="white-space: normal">{{ $item->barang_code }}</td>
                                     <td style="white-space: normal">
                                         <button type="button" class="badge mx-1 badge-primary p-2 border-0 text-white"
-                                            data-toggle="modal" data-target="#ubah-kategori{{ $category->id }}"
-                                            title="Ubah">
+                                            data-toggle="modal" data-target="#ubah-barang{{ $item->id }}" title="Ubah">
                                             <span class="fal fa-pencil mr-1"></span>
                                         </button>
-                                        <form action="/categories/{{ $category->id }}" method="POST" class="d-inline">
+                                        <form action="/template_barang/{{ $item->id }}" method="POST" class="d-inline">
                                             @method('delete')
                                             @csrf
-                                            <button title="Hapus Kategori" class="badge mx-1 badge-danger p-2 border-0"
+                                            <button title="Hapus Barang" class="badge mx-1 badge-danger p-2 border-0"
                                                 onclick="return confirm('Anda takin?')">
                                                 <i class="fas fa-trash"></i>
                                             </button>
@@ -437,16 +433,17 @@
                                     </td>
                                 </tr>
 
-                                <div class="modal fade" id="ubah-kategori{{ $category->id }}" tabindex="-1"
-                                    role="dialog" aria-hidden="true">
+                                <div class="modal fade" id="ubah-barang{{ $item->id }}" tabindex="-1" role="dialog"
+                                    aria-hidden="true">
                                     <div class="modal-dialog modal-lg" role="document">
                                         <div class="modal-content">
-                                            <form autocomplete="off" novalidate action="/categories/{{ $category->id }}"
-                                                method="post">
+                                            <form autocomplete="off" novalidate
+                                                action="/template_barang/{{ $item->id }}" method="post"
+                                                enctype="multipart/form-data">
                                                 @method('put')
                                                 @csrf
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title">Ubah Kategori</h5>
+                                                    <h5 class="modal-title">Ubah Template</h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true"><i class="fal fa-times"></i></span>
@@ -454,34 +451,68 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="form-group">
-                                                        <label for="name">Nama Kategori</label>
-                                                        <input type="text" value="{{ old('name', $category->name) }}"
+                                                        <label for="name">Gambar</label>
+                                                        <input type="hidden" name="oldImage" value="{{ $item->foto }}">
+                                                        @if ($item->foto)
+                                                        <img src="{{ asset('storage/' . $item->foto) }}"
+                                                            class="image-preview img-fluid mb-3 col-sm-5 d-block">
+                                                        @else
+                                                        <img class="image-preview img-fluid mb-3 col-sm-5 d-block">
+                                                        @endif
+                                                        <div class="custom-file">
+                                                            <input type="file" class="custom-file-input" id="foto"
+                                                                name="foto" onchange="previewImage()">
+                                                            <label class="custom-file-label" for="foto">Pilih
+                                                                Gambar Galeri</label>
+                                                        </div>
+                                                        @error('foto')
+                                                        <p class="text-danger">{{ $message }}</p>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="name">Nama Barang</label>
+                                                        <input type="text" value="{{ old('name', $item->name) }}"
                                                             class="form-control @error('name') is-invalid @enderror"
-                                                            id="name" name="name" placeholder="Nama Kategori">
+                                                            id="name" name="name" placeholder="Nama Barang">
                                                         @error('name')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="category_code">Kode Kategori</label>
+                                                        <label for="barang_code">Kode Barang</label>
                                                         <input type="text"
-                                                            value="{{ old('category_code', $category->category_code) }}"
-                                                            class="form-control @error('category_code') is-invalid @enderror"
-                                                            id="category_code" name="category_code"
-                                                            placeholder="Kode Kategori"
+                                                            value="{{ old('barang_code', $item->barang_code) }}"
+                                                            class="form-control @error('barang_code') is-invalid @enderror"
+                                                            id="barang_code" name="barang_code"
+                                                            placeholder="Kode Barang"
                                                             onkeyup="this.value = this.value.toUpperCase()">
-                                                        @error('category_code')
+                                                        @error('barang_code')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="category_number_code">Kode Angka</label>
-                                                        <input type="number"
-                                                            value="{{ old('category_number_code', $category->category_number_code) }}"
-                                                            class="form-control @error('category_number_code') is-invalid @enderror"
-                                                            id="category_number_code" name="category_number_code"
-                                                            placeholder="Lantai">
-                                                        @error('category_number_code')
+                                                        <label for="merk">Merek Barang</label>
+                                                        <input type="text" value="{{ old('merk', $item->merk) }}"
+                                                            class="form-control @error('merk') is-invalid @enderror"
+                                                            id="merk" name="merk" placeholder="Merek Barang">
+                                                        @error('merk')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="condition">Kondisi Barang</label>
+                                                        <select
+                                                            class="form-control w-100 @error('condition') is-invalid @enderror"
+                                                            id="single-default" name="condition">
+                                                            <optgroup label="Kondisi Barang">
+                                                                <option value="Baik" {{ $item->condition === "Baik" ?
+                                                                    "selected" : '' }}>Baik</option>
+                                                                <option value="Rusak" {{ $item->condition === "Rusak"
+                                                                    ?
+                                                                    "selected" : '' }}>Rusak</option>
+                                                            </optgroup>
+                                                        </select>
+                                                        @error('condition')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
                                                     </div>
@@ -502,9 +533,11 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Nama Kategori</th>
-                                    <th>Kode Kategori</th>
-                                    <th>Lantai</th>
+                                    {{-- <th>Foto</th> --}}
+                                    <th>No</th>
+                                    <th>Nama Barang</th>
+                                    <th>Kategori</th>
+                                    <th>Kode Barang</th>
                                     <th>Aksi</th>
                                 </tr>
                             </tfoot>
@@ -520,40 +553,65 @@
 <div class="modal fade" id="default-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <form autocomplete="off" novalidate action="/categories" method="post">
+            <form autocomplete="off" novalidate action="/barang" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title">Tambah Kategori</h5>
+                    <h5 class="modal-title">Tambah Barang</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"><i class="fal fa-times"></i></span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="name">Nama Kategori</label>
-                        <input type="text" value="{{ old('name') }}"
-                            class="form-control @error('name') is-invalid @enderror" id="name" name="name"
-                            placeholder="Nama Kategori">
-                        @error('name')
+                        <label for="custom_name">Nama Barang <sup>(Opsional)</sup></label>
+                        <input type="text" value="{{ old('custom_name') }}"
+                            class="form-control @error('custom_name') is-invalid @enderror" id="custom_name"
+                            name="custom_name" placeholder="Nama Barang">
+                        @error('custom_name')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="category_code">Kode Kategori</label>
-                        <input type="text" value="{{ old('category_code') }}"
-                            class="form-control @error('category_code') is-invalid @enderror" id="category_code"
-                            name="category_code" placeholder="Kode Kategori"
-                            onkeyup="this.value = this.value.toUpperCase()">
-                        @error('category_code')
+                        <label class="form-label" for="single-default">
+                            Kondisi Barang
+                        </label>
+                        <select class="form-control w-100 @error('condition') is-invalid @enderror" id="single-default"
+                            name="condition">
+                            <optgroup label="Kondisi Barang">
+                                <option value="Baik">Baik</option>
+                                <option value="Rusak">Rusak</option>
+                            </optgroup>
+                        </select>
+                        @error('condition')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="category_number_code">Kode Angka</label>
-                        <input type="number" value="{{ old('category_number_code') }}"
-                            class="form-control @error('category_number_code') is-invalid @enderror"
-                            id="category_number_code" name="category_number_code" placeholder="Kode Angka">
-                        @error('category_number_code')
+                        <label class="form-label" for="single-default">
+                            Tahun Pengadaan
+                        </label>
+                        <select class="form-control w-100 @error('bidding_year') is-invalid @enderror"
+                            id="single-default" name="bidding_year">
+                            <optgroup label="Tahun Pengadaan">
+                                <option value="2010">2010</option>
+                                <option value="2011">2011</option>
+                                <option value="2012">2012</option>
+                                <option value="2013">2013</option>
+                                <option value="2014">2014</option>
+                                <option value="2015">2015</option>
+                                <option value="2016">2016</option>
+                                <option value="2017">2017</option>
+                                <option value="2018">2018</option>
+                                <option value="2019">2019</option>
+                                <option value="2020">2020</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                            </optgroup>
+                        </select>
+                        @error('bidding_year')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>

@@ -3,8 +3,8 @@
     <div class="page-logo">
         <a href="#" class="page-logo-link press-scale-down d-flex align-items-center position-relative"
             data-toggle="modal" data-target="#modal-shortcut">
-            <img src="/img/logo.png" alt="SmartAdmin WebApp" aria-roledescription="logo">
-            <span class="page-logo-text mr-1">SmartAdmin WebApp</span>
+            <img src="/img/logo.png" alt="{{ $i->application_name }}" aria-roledescription="logo">
+            <span class="page-logo-text mr-1">{{ $i->application_name }}</span>
             <span class="position-absolute text-white opacity-50 small pos-top pos-right mr-2 mt-n2"></span>
             <i class="fal fa-angle-down d-inline-block ml-1 fs-lg color-primary-300"></i>
         </a>
@@ -21,14 +21,15 @@
             </div>
         </div>
         <div class="info-card">
-            <img src="/img/demo/avatars/avatar-admin.png" class="profile-image rounded-circle" alt="Dr. Codex Lantern">
+            <img src="/img/demo/avatars/avatar-admin.png" class="profile-image rounded-circle"
+                alt="{{ auth()->user()->name }}">
             <div class="info-card-text">
                 <a href="#" class="d-flex align-items-center text-white">
                     <span class="text-truncate text-truncate-sm d-inline-block">
-                        Dr. Codex Lantern
+                        {{ auth()->user()->name }}
                     </span>
                 </a>
-                <span class="d-inline-block text-truncate text-truncate-sm">Toronto, Canada</span>
+                <span class="d-inline-block text-truncate text-truncate-sm">{{ $i->instance_name }}</span>
             </div>
             <img src="/img/card-backgrounds/cover-2-lg.png" class="cover" alt="cover">
             <a href="#" onclick="return false;" class="pull-trigger-btn" data-action="toggle"
@@ -43,6 +44,7 @@
                     <span class="nav-link-text" data-i18n="nav.application_dashboard">Dashboard</span>
                 </a>
             </li>
+            @can('admin')
             <li class="{{ set_active('rooms') }}">
                 <a href="/rooms" title="Ruangan" data-filter-tags="application ruangan">
                     <i class="fal fa-home"></i>
@@ -55,6 +57,7 @@
                     <span class="nav-link-text" data-i18n="nav.application_kategori">Kategori Barang</span>
                 </a>
             </li>
+            @endcan
             <li class="{{ set_active('template_barang') }}">
                 <a href="/template_barang" title="Template Barang" data-filter-tags="application template barang">
                     <i class="fal fa-clipboard"></i>
@@ -67,31 +70,19 @@
                     <span class="nav-link-text" data-i18n="nav.application_barang">Barang</span>
                 </a>
             </li>
+            @can('admin')
             <li class="{{ set_active('user') }}">
                 <a href="/user" title="User" data-filter-tags="application user">
-                    <i class="fal fa-cube"></i>
+                    <i class="fal fa-users"></i>
                     <span class="nav-link-text" data-i18n="nav.application_user">User</span>
                 </a>
             </li>
-            {{-- <li class="{{ set_active_mainmenu(['ruang', 'tambah_ruang']) }}">
-                <a href="#" title="Ruangan" data-filter-tags="ruangan">
-                    <i class="fal fa-window"></i>
-                    <span class="nav-link-text" data-i18n="nav.ruangan">Ruangan</span>
+            <li class="{{ set_active('cpanel') }}">
+                <a href="/cpanel" title="Cpanel" data-filter-tags="application cpanel">
+                    <i class="fal fa-cog"></i>
+                    <span class="nav-link-text" data-i18n="nav.application_cpanel">Control Panel</span>
                 </a>
-                <ul>
-                    <li class="{{ set_active('ruang') }}">
-                        <a href="/rooms" title="Lihat Ruangan" data-filter-tags="ruang lihat ruangan">
-                            <span class="nav-link-text" data-i18n="nav.ruang_room">Lihat Ruang</span>
-                        </a>
-                    </li>
-                    <li class="{{ set_active('tambah_ruang') }}">
-                        <a href="/rooms/create" title="Tambah Ruang" data-filter-tags="rooms tambah_ruang">
-                            <span class="nav-link-text" data-i18n="nav.rooms_room">Tambah Ruang</span>
-                        </a>
-                    </li>
-                </ul>
-            </li> --}}
-
+            </li>
             <li
                 class="{{ set_active_mainmenu(['intel_analytics_dashboard', 'intel_marketing_dashboard', 'intel_introduction', 'intel_privacy', 'intel_build_notes']) }}">
                 <a href="#" title="Default Menu" data-filter-tags="default menu">
@@ -1169,6 +1160,7 @@
                     </li>
                 </ul>
             </li>
+            @endcan
         </ul>
         <div class="filter-message js-filter-message bg-success-600"></div>
     </nav>

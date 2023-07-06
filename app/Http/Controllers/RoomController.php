@@ -4,40 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Barang;
 use App\Models\BarangCategory;
+use App\Models\ControlPanel;
 use App\Models\Room;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class RoomController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return view('pages.rooms.index', [
-            'rooms' => Room::all()
+            'rooms' => Room::all(),
+            'i' => ControlPanel::all()->first()
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -50,40 +31,17 @@ class RoomController extends Controller
         return redirect('/rooms')->with('success', 'Ruangan berhasil ditambahkan!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Room  $room
-     * @return \Illuminate\Http\Response
-     */
     public function show(Barang $barang, Room $room)
     {
         return view('pages.rooms.show', [
             'title' => "Ruang $room->name",
             'room' => $room,
             'categories' => BarangCategory::all(),
-            'barangs' => $barang->where('room_id', $room->id)->get()
+            'barangs' => $barang->where('room_id', $room->id)->get(),
+            'i' => ControlPanel::all()->first()
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Room  $room
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Room $room)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Room  $room
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Room $room)
     {
         $validatedData = $request->validate([
@@ -96,12 +54,6 @@ class RoomController extends Controller
         return redirect('/rooms')->with('success', 'Ruangan berhasil diubah!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Room  $room
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Room $room)
     {
         Room::destroy($room->id);

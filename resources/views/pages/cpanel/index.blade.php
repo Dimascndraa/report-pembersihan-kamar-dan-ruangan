@@ -1,30 +1,16 @@
 @extends('inc.layout')
-@section('title', 'Kategori Barang')
+@section('title','Control Panel')
 @section('content')
 <main id="js-page-content" role="main" class="page-content">
-    @include('inc.breadcrumb', ['bcrumb' => 'bc_level_dua', 'bc_1' => 'Datatables'])
+    @include('inc.breadcrumb',['bcrumb' => 'bc_level_dua','bc_1'=>'Datatables'])
     <div class="subheader">
-        @component('inc.subheader', ['subheader_title' => 'st_type_5'])
-        @slot('sh_icon')
-        table
-        @endslot
-        @slot('sh_titile_main')
-        DataTables: <span class='fw-300'>Kategori Barang</span> <sup class='badge badge-primary fw-500'>ADDON</sup>
-        @endslot
-        @slot('sh_descipt')
-        Create headache free searching, sorting and pagination tables without any complex
-        configuration
-        @endslot
+        @component('inc.subheader',['subheader_title'=>'st_type_5'])
+        @slot('sh_icon') table @endslot
+        @slot('sh_titile_main') DataTables: <span class='fw-300'>Control Panel</span> <sup
+            class='badge badge-primary fw-500'>ADDON</sup> @endslot
+        @slot('sh_descipt') Create headache free searching, sorting and pagination tables without any complex
+        configuration @endslot
         @endcomponent
-    </div>
-    <div class="row mb-5">
-        <div class="col-xl-12">
-            <button type="button" class="btn btn-primary waves-effect waves-themed" data-toggle="modal"
-                data-target="#default-example-modal-lg">
-                <span class="fal fa-plus-circle mr-1"></span>
-                Tambah Kategori Barang
-            </button>
-        </div>
     </div>
 
     <div class="row">
@@ -32,7 +18,7 @@
             <div id="panel-1" class="panel">
                 <div class="panel-hdr">
                     <h2>
-                        Table <span class="fw-300"><i>Kategori Barang</i></span>
+                        Cpanels <span class="fw-300"><i>Table</i></span>
                     </h2>
                     <div class="panel-toolbar">
                         <button class="btn btn-primary btn-sm" data-toggle="dropdown">Table Style</button>
@@ -407,46 +393,37 @@
                         <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
                             <thead>
                                 <tr>
-                                    <th>Nama Kategori</th>
-                                    <th>Kode Kategori</th>
-                                    <th>Kode Angka</th>
+                                    <th>Nama Instansi</th>
+                                    <th>Kode Instansi</th>
+                                    <th>Nama Aplikasi</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($categories as $category)
+                                @foreach ($cpanels as $cpanel)
                                 <tr>
-                                    <td style="white-space: normal"><a href="categories/{{ $category->id }}">{{
-                                            $category->name }}</a></td>
-                                    <td style="white-space: normal">{{ $category->category_code }}</td>
-                                    <td style="white-space: normal">{{ $category->category_number_code }}</td>
+                                    <td style="white-space: normal">{{ $cpanel->instance_name }}</td>
+                                    <td style="white-space: normal">{{ $cpanel->instance_code }}</td>
+                                    <td style="white-space: normal">{{ $cpanel->application_name }}</td>
                                     <td style="white-space: normal">
                                         <button type="button" class="badge mx-1 badge-primary p-2 border-0 text-white"
-                                            data-toggle="modal" data-target="#ubah-kategori{{ $category->id }}"
+                                            data-toggle="modal" data-target="#ubah-cpanel{{ $cpanel->id }}"
                                             title="Ubah">
-                                            <span class="fal fa-pencil mr-1"></span>
+                                            <span class="fal fa-pencil mr-1"></span> Ubah
                                         </button>
-                                        <form action="/categories/{{ $category->id }}" method="POST" class="d-inline">
-                                            @method('delete')
-                                            @csrf
-                                            <button title="Hapus Kategori" class="badge mx-1 badge-danger p-2 border-0"
-                                                onclick="return confirm('Anda takin?')">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </form>
                                     </td>
                                 </tr>
 
-                                <div class="modal fade" id="ubah-kategori{{ $category->id }}" tabindex="-1"
-                                    role="dialog" aria-hidden="true">
+                                <div class="modal fade" id="ubah-cpanel{{ $cpanel->id }}" tabindex="-1" role="dialog"
+                                    aria-hidden="true">
                                     <div class="modal-dialog modal-lg" role="document">
                                         <div class="modal-content">
-                                            <form autocomplete="off" novalidate action="/categories/{{ $category->id }}"
+                                            <form autocomplete="off" novalidate action="/cpanel/{{ $cpanel->id }}"
                                                 method="post">
                                                 @method('put')
                                                 @csrf
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title">Ubah Kategori</h5>
+                                                    <h5 class="modal-title">Ubah Ruang</h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true"><i class="fal fa-times"></i></span>
@@ -454,34 +431,36 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="form-group">
-                                                        <label for="name">Nama Kategori</label>
-                                                        <input type="text" value="{{ old('name', $category->name) }}"
-                                                            class="form-control @error('name') is-invalid @enderror"
-                                                            id="name" name="name" placeholder="Nama Kategori">
-                                                        @error('name')
-                                                        <div class="invalid-feedback">{{ $message }}</div>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="category_code">Kode Kategori</label>
+                                                        <label for="instance_name">Nama Instansi</label>
                                                         <input type="text"
-                                                            value="{{ old('category_code', $category->category_code) }}"
-                                                            class="form-control @error('category_code') is-invalid @enderror"
-                                                            id="category_code" name="category_code"
-                                                            placeholder="Kode Kategori"
-                                                            onkeyup="this.value = this.value.toUpperCase()">
-                                                        @error('category_code')
+                                                            value="{{ old('instance_name', $cpanel->instance_name) }}"
+                                                            class="form-control @error('instance_name') is-invalid @enderror"
+                                                            id="instance_name" name="instance_name"
+                                                            placeholder="Nama Instansi">
+                                                        @error('instance_name')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="category_number_code">Kode Angka</label>
-                                                        <input type="number"
-                                                            value="{{ old('category_number_code', $category->category_number_code) }}"
-                                                            class="form-control @error('category_number_code') is-invalid @enderror"
-                                                            id="category_number_code" name="category_number_code"
+                                                        <label for="instance_code">Kode instansi</label>
+                                                        <input type="text"
+                                                            value="{{ old('instance_code', $cpanel->instance_code) }}"
+                                                            class="form-control @error('instance_code') is-invalid @enderror"
+                                                            id="instance_code" name="instance_code"
+                                                            placeholder="Kode instansi"
+                                                            onkeyup="this.value = this.value.toUpperCase()">
+                                                        @error('instance_code')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="application_name">Lantai</label>
+                                                        <input type="text"
+                                                            value="{{ old('application_name', $cpanel->application_name) }}"
+                                                            class="form-control @error('application_name') is-invalid @enderror"
+                                                            id="application_name" name="application_name"
                                                             placeholder="Lantai">
-                                                        @error('category_number_code')
+                                                        @error('application_name')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
                                                     </div>
@@ -502,9 +481,9 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Nama Kategori</th>
-                                    <th>Kode Kategori</th>
-                                    <th>Lantai</th>
+                                    <th>Nama Instansi</th>
+                                    <th>Kode Instansi</th>
+                                    <th>Nama Aplikasi</th>
                                     <th>Aksi</th>
                                 </tr>
                             </tfoot>
@@ -520,40 +499,39 @@
 <div class="modal fade" id="default-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <form autocomplete="off" novalidate action="/categories" method="post">
+            <form autocomplete="off" novalidate action="/cpanel" method="post">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title">Tambah Kategori</h5>
+                    <h5 class="modal-title">Tambah Ruang</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"><i class="fal fa-times"></i></span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="name">Nama Kategori</label>
+                        <label for="name">Nama Ruang</label>
                         <input type="text" value="{{ old('name') }}"
                             class="form-control @error('name') is-invalid @enderror" id="name" name="name"
-                            placeholder="Nama Kategori">
+                            placeholder="Nama Ruang">
                         @error('name')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="category_code">Kode Kategori</label>
-                        <input type="text" value="{{ old('category_code') }}"
-                            class="form-control @error('category_code') is-invalid @enderror" id="category_code"
-                            name="category_code" placeholder="Kode Kategori"
-                            onkeyup="this.value = this.value.toUpperCase()">
-                        @error('category_code')
+                        <label for="cpanel_code">Kode Ruang</label>
+                        <input type="text" value="{{ old('cpanel_code') }}"
+                            class="form-control @error('cpanel_code') is-invalid @enderror" id="cpanel_code"
+                            name="cpanel_code" placeholder="Kode Ruang" onkeyup="this.value = this.value.toUpperCase()">
+                        @error('cpanel_code')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="category_number_code">Kode Angka</label>
-                        <input type="number" value="{{ old('category_number_code') }}"
-                            class="form-control @error('category_number_code') is-invalid @enderror"
-                            id="category_number_code" name="category_number_code" placeholder="Kode Angka">
-                        @error('category_number_code')
+                        <label for="floor">Lantai</label>
+                        <input type="number" value="{{ old('floor') }}"
+                            class="form-control @error('floor') is-invalid @enderror" id="floor" name="floor"
+                            placeholder="Lantai">
+                        @error('floor')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
@@ -572,74 +550,31 @@
 @endsection
 @section('plugin')
 <script src="/js/datagrid/datatables/datatables.bundle.js"></script>
-<script src="/js/datatable/jszip.min.js"></script>
-
 <script>
     /* demo scripts for change table color */
-        /* change background */
-        $(document).ready(function() {
-            $('#dt-basic-example').dataTable({
-                responsive: true,
-                dom: 'Bfrtip',
-                buttons: [{
-                        extend: 'print',
-                        text: 'Print',
-                        className: 'float-right btn btn-primary',
-                        exportOptions: {
-                            columns: ':not(.no-export)'
-                        },
-                    },
-                    {
-                        extend: 'excel',
-                        text: 'Download as Excel',
-                        className: 'float-right btn btn-success',
-                        exportOptions: {
-                            columns: ':not(.no-export)'
-                        }
-                    }
-                ]
+            /* change background */
+            $(document).ready(function()
+            {
+                $('#dt-basic-example').dataTable(
+                {
+                    responsive: true
+                });
+
+                $('.js-thead-colors a').on('click', function()
+                {
+                    var theadColor = $(this).attr("data-bg");
+                    console.log(theadColor);
+                    $('#dt-basic-example thead').removeClassPrefix('bg-').addClass(theadColor);
+                });
+
+                $('.js-tbody-colors a').on('click', function()
+                {
+                    var theadColor = $(this).attr("data-bg");
+                    console.log(theadColor);
+                    $('#dt-basic-example').removeClassPrefix('bg-').addClass(theadColor);
+                });
+
             });
 
-            $('.js-thead-colors a').on('click', function() {
-                var theadColor = $(this).attr("data-bg");
-                console.log(theadColor);
-                $('#dt-basic-example thead').removeClassPrefix('bg-').addClass(theadColor);
-            });
-
-            $('.js-tbody-colors a').on('click', function() {
-                var theadColor = $(this).attr("data-bg");
-                console.log(theadColor);
-                $('#dt-basic-example').removeClassPrefix('bg-').addClass(theadColor);
-            });
-
-        });
-
-        function previewImage() {
-            const image = document.querySelector('#foto');
-            const imgPreview = document.querySelector('.image-preview')
-
-            imgPreview.style.display = 'block';
-
-            const oFReader = new FileReader();
-            oFReader.readAsDataURL(image.files[0])
-
-            oFReader.onload = function(oFREvent) {
-                imgPreview.src = oFREvent.target.result;
-            }
-        }
-
-        function previewImage2() {
-            const image = document.querySelector('#foto2');
-            const imgPreview = document.querySelector('.image-preview2')
-
-            imgPreview.style.display = 'block';
-
-            const oFReader = new FileReader();
-            oFReader.readAsDataURL(image.files[0])
-
-            oFReader.onload = function(oFREvent) {
-                imgPreview.src = oFREvent.target.result;
-            }
-        }
 </script>
 @endsection

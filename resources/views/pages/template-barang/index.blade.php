@@ -408,20 +408,24 @@
                             <thead>
                                 <tr>
                                     {{-- <th>Foto</th> --}}
+                                    <th>No</th>
                                     <th>Nama</th>
                                     <th>Kode Barang</th>
-                                    <th>Merk</th>
-                                    <th>Aksi</th>
+                                    <th>Kategori</th>
+                                    <th class="no-export">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($template as $barang)
                                 <tr>
                                     {{-- <td style="white-space: normal">{{ $barang->foto }}</td> --}}
-                                    <td style="white-space: normal">{{ $barang->name }}</td>
-                                    <td style="white-space: normal">{{ $barang->barang_code }}</td>
-                                    <td style="white-space: normal">{{ $barang->merk }}</td>
+                                    <td style="white-space: normal">{{ $loop->iteration }}</td>
                                     <td style="white-space: normal">
+                                        <a href="/template_barang/{{ $barang->id }}">{{ $barang->name }}</a>
+                                    </td>
+                                    <td style="white-space: normal">{{ $barang->barang_code }}</td>
+                                    <td style="white-space: normal">{{ $barang->category->name }}</td>
+                                    <td style="white-space: normal" class="no-export">
                                         <button type="button" class="badge mx-1 badge-primary p-2 border-0 text-white"
                                             data-toggle="modal" data-target="#ubah-barang{{ $barang->id }}"
                                             title="Ubah">
@@ -512,11 +516,12 @@
                                                             class="form-control w-100 @error('condition') is-invalid @enderror"
                                                             id="single-default" name="condition">
                                                             <optgroup label="Kondisi Barang">
-                                                                <option value="Baik" {{ $barang->condition === "Baik" ?
-                                                                    "selected" : '' }}>Baik</option>
-                                                                <option value="Rusak" {{ $barang->condition === "Rusak"
-                                                                    ?
-                                                                    "selected" : '' }}>Rusak</option>
+                                                                <option value="Baik" {{ $barang->condition === 'Baik' ?
+                                                                    'selected' : '' }}>
+                                                                    Baik</option>
+                                                                <option value="Rusak" {{ $barang->condition === 'Rusak'
+                                                                    ? 'selected' : '' }}>
+                                                                    Rusak</option>
                                                             </optgroup>
                                                         </select>
                                                         @error('condition')
@@ -541,10 +546,11 @@
                             <tfoot>
                                 <tr>
                                     {{-- <th>Foto</th> --}}
+                                    <th>No</th>
                                     <th>Nama Barang</th>
                                     <th>Kode Barang</th>
-                                    <th>Merk</th>
-                                    <th>Aksi</th>
+                                    <th>Kategori</th>
+                                    <th class="no-export">Aksi</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -639,12 +645,32 @@
 @endsection
 @section('plugin')
 <script src="/js/datagrid/datatables/datatables.bundle.js"></script>
+<script src="/js/datatable/jszip.min.js"></script>
+
 <script>
     /* demo scripts for change table color */
         /* change background */
         $(document).ready(function() {
             $('#dt-basic-example').dataTable({
-                responsive: true
+                responsive: true,
+                dom: 'Bfrtip',
+                buttons: [{
+                        extend: 'print',
+                        text: 'Print',
+                        className: 'float-right btn btn-primary',
+                        exportOptions: {
+                            columns: ':not(.no-export)'
+                        },
+                    },
+                    {
+                        extend: 'excel',
+                        text: 'Download as Excel',
+                        className: 'float-right btn btn-success',
+                        exportOptions: {
+                            columns: ':not(.no-export)'
+                        }
+                    }
+                ]
             });
 
             $('.js-thead-colors a').on('click', function() {

@@ -1,12 +1,12 @@
 @extends('inc.layout')
-@section('title','Basic')
+@section('title','Ruangan')
 @section('content')
 <main id="js-page-content" role="main" class="page-content">
     @include('inc.breadcrumb',['bcrumb' => 'bc_level_dua','bc_1'=>'Datatables'])
     <div class="subheader">
         @component('inc.subheader',['subheader_title'=>'st_type_5'])
         @slot('sh_icon') table @endslot
-        @slot('sh_titile_main') DataTables: <span class='fw-300'>Basic</span> <sup
+        @slot('sh_titile_main') DataTables: <span class='fw-300'>Ruangan</span> <sup
             class='badge badge-primary fw-500'>ADDON</sup> @endslot
         @slot('sh_descipt') Create headache free searching, sorting and pagination tables without any complex
         configuration @endslot
@@ -562,31 +562,74 @@
 @endsection
 @section('plugin')
 <script src="/js/datagrid/datatables/datatables.bundle.js"></script>
+<script src="/js/datatable/jszip.min.js"></script>
+
 <script>
     /* demo scripts for change table color */
-            /* change background */
-            $(document).ready(function()
-            {
-                $('#dt-basic-example').dataTable(
-                {
-                    responsive: true
-                });
-
-                $('.js-thead-colors a').on('click', function()
-                {
-                    var theadColor = $(this).attr("data-bg");
-                    console.log(theadColor);
-                    $('#dt-basic-example thead').removeClassPrefix('bg-').addClass(theadColor);
-                });
-
-                $('.js-tbody-colors a').on('click', function()
-                {
-                    var theadColor = $(this).attr("data-bg");
-                    console.log(theadColor);
-                    $('#dt-basic-example').removeClassPrefix('bg-').addClass(theadColor);
-                });
-
+        /* change background */
+        $(document).ready(function() {
+            $('#dt-basic-example').dataTable({
+                responsive: true,
+                dom: 'Bfrtip',
+                buttons: [{
+                        extend: 'print',
+                        text: 'Print',
+                        className: 'float-right btn btn-primary',
+                        exportOptions: {
+                            columns: ':not(.no-export)'
+                        },
+                    },
+                    {
+                        extend: 'excel',
+                        text: 'Download as Excel',
+                        className: 'float-right btn btn-success',
+                        exportOptions: {
+                            columns: ':not(.no-export)'
+                        }
+                    }
+                ]
             });
 
+            $('.js-thead-colors a').on('click', function() {
+                var theadColor = $(this).attr("data-bg");
+                console.log(theadColor);
+                $('#dt-basic-example thead').removeClassPrefix('bg-').addClass(theadColor);
+            });
+
+            $('.js-tbody-colors a').on('click', function() {
+                var theadColor = $(this).attr("data-bg");
+                console.log(theadColor);
+                $('#dt-basic-example').removeClassPrefix('bg-').addClass(theadColor);
+            });
+
+        });
+
+        function previewImage() {
+            const image = document.querySelector('#foto');
+            const imgPreview = document.querySelector('.image-preview')
+
+            imgPreview.style.display = 'block';
+
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(image.files[0])
+
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            }
+        }
+
+        function previewImage2() {
+            const image = document.querySelector('#foto2');
+            const imgPreview = document.querySelector('.image-preview2')
+
+            imgPreview.style.display = 'block';
+
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(image.files[0])
+
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            }
+        }
 </script>
 @endsection

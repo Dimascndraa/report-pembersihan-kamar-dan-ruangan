@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BarangCategoryController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\ControlPanelController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\TemplateBarangController;
 use App\Http\Controllers\UserController;
@@ -22,19 +23,24 @@ Route::get('/', function () {
     return view('auth.login');
 })->middleware('guest');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('admin')->group(function () {
     Route::resource('/rooms', RoomController::class);
     Route::resource('/categories', BarangCategoryController::class);
-    Route::resource('/barang', BarangController::class);
-    Route::resource('/template_barang', TemplateBarangController::class);
-    Route::put('/barang/{barang:id}/ruang', [BarangController::class, 'pindahkan']);
-
-    Route::post('/rooms/barang', [RoomController::class, 'storeBarang']);
-    Route::put('/rooms/barang', [RoomController::class, 'updateBarang']);
-
     Route::resource('/user', UserController::class);
     Route::put('/user/{user:id}/pindah', [UserController::class, 'pindahkan']);
     Route::put('/user/{user:id}/update-password', [UserController::class, 'updatePassword']);
+    Route::put('/user/{user:id}/akses', [UserController::class, 'akses']);
+    Route::resource('/cpanel', ControlPanelController::class);
+    Route::put('/barang/{barang:id}/ruang', [BarangController::class, 'pindahkan']);
+    Route::put('/barang/{barang:id}/pinjam', [BarangController::class, 'pinjam']);
+    Route::put('/barang/{barang:id}/kembali', [BarangController::class, 'kembali']);
+    Route::post('/rooms/barang', [RoomController::class, 'storeBarang']);
+    Route::put('/rooms/barang', [RoomController::class, 'updateBarang']);
+});
+
+Route::middleware('auth')->group(function () {
+    Route::resource('/barang', BarangController::class);
+    Route::resource('/template_barang', TemplateBarangController::class);
 });
 
 require __DIR__ . '/auth.php';
