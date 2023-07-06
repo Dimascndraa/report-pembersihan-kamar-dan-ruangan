@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTemplateBarangsTable extends Migration
+class CreateBedsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateTemplateBarangsTable extends Migration
      */
     public function up()
     {
-        Schema::create('template_barangs', function (Blueprint $table) {
+        Schema::create('beds', function (Blueprint $table) {
             $table->id();
-            $table->integer('category_id');
-            $table->string('name');
-            $table->string('barang_code');
-            $table->string('foto');
-            $table->string('merk')->nullable();
+            $table->foreignId('room_id');
+            $table->string('name')->unique();
+            $table->string('bed_number');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateTemplateBarangsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('template_barangs');
+        Schema::dropIfExists('beds');
     }
 }

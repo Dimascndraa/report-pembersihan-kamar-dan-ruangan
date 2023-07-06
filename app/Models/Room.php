@@ -8,11 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Room extends Model
 {
     protected $guarded = ['id'];
+    protected $with = ['bed'];
 
     use HasFactory;
 
-    public function barang()
+    public function kelas_rawat()
     {
-        return $this->hasMany(Barang::class);
+        return $this->belongsTo(KelasRawat::class);
+    }
+
+    public function bed()
+    {
+        return $this->hasMany(Bed::class);
     }
 }

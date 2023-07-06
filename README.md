@@ -13,13 +13,13 @@ Jika Anda ingin menambahkan projek ini di komputer Anda sendiri, Anda bisa melak
 ## Klon repositori ini
 
 ```
-git clone https://github.com/Dimascndraa/inventaris-barang.git
+git clone https://github.com/Dimascndraa/report-pembersihan-kamar-dan-ruangan.git
 ```
 
 Setelah itu, buka repository dengan mengetikan perintah:
 
 ```
-cd inventaris-barang
+cd report-pembersihan-kamar-dan-ruangan
 ```
 
 ## Install Depedency

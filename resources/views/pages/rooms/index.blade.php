@@ -6,7 +6,7 @@
     <div class="subheader">
         @component('inc.subheader',['subheader_title'=>'st_type_5'])
         @slot('sh_icon') table @endslot
-        @slot('sh_titile_main') DataTables: <span class='fw-300'>Ruangan</span> <sup
+        @slot('sh_titile_main') Ruangan: <span class='fw-300'>{{ $kelas_rawat->name }}</span> <sup
             class='badge badge-primary fw-500'>ADDON</sup> @endslot
         @slot('sh_descipt') Create headache free searching, sorting and pagination tables without any complex
         configuration @endslot
@@ -27,7 +27,7 @@
             <div id="panel-1" class="panel">
                 <div class="panel-hdr">
                     <h2>
-                        Rooms <span class="fw-300"><i>Table</i></span>
+                        Ruangan di Kelas Rawat <span class="fw-300"><i>{{ $kelas_rawat->name }}</i></span>
                     </h2>
                     <div class="panel-toolbar">
                         <button class="btn btn-primary btn-sm" data-toggle="dropdown">Table Style</button>
@@ -402,25 +402,31 @@
                         <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
                             <thead>
                                 <tr>
+                                    <th>No</th>
                                     <th>Nama Ruang</th>
-                                    <th>Kode Ruang</th>
-                                    <th>Lantai</th>
+                                    <th>Nomor Ruang</th>
+                                    <th>Jumlah Tempat Tidur</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($rooms as $room)
                                 <tr>
-                                    <td style="white-space: normal"><a href="/rooms/{{ $room->id }}" class="">{{
+                                    <td style="white-space: normal">{{ $loop->iteration }}</td>
+                                    <td style="white-space: normal"><a href="/bed/{{ $room->id }}" class="">{{
                                             $room->name }}</a></td>
-                                    <td style="white-space: normal">{{ $room->room_code }}</td>
-                                    <td style="white-space: normal">{{ $room->floor }}</td>
+                                    <td style="white-space: normal">{{ $room->room_number }}</td>
+                                    <td style="white-space: normal">{{ count($room->bed) }}</td>
                                     <td style="white-space: normal">
+                                        <a href="/bed/{{ $room->id }}" style="transform: scale(1.1)"
+                                            class="badge mx-1 badge-warning p-2 border-0 text-white"><i
+                                                class='bx bx-bed' style="transform: scale(1.5)"
+                                                title="Kelola Tempat Tidur"></i></a>
                                         <button type="button" class="badge mx-1 badge-primary p-2 border-0 text-white"
                                             data-toggle="modal" data-target="#ubah-ruang{{ $room->id }}" title="Ubah">
                                             <span class="fal fa-pencil mr-1"></span>
                                         </button>
-                                        <form action="/rooms/{{ $room->id }}" method="POST" class="d-inline">
+                                        <form action="/ruangan/{{ $room->id }}" method="POST" class="d-inline">
                                             @method('delete')
                                             @csrf
                                             <button title="Hapus Ruang" class="badge mx-1 badge-danger p-2 border-0"
@@ -435,7 +441,7 @@
                                     aria-hidden="true">
                                     <div class="modal-dialog modal-lg" role="document">
                                         <div class="modal-content">
-                                            <form autocomplete="off" novalidate action="/rooms/{{ $room->id }}"
+                                            <form autocomplete="off" novalidate action="/ruangan/{{ $room->id }}"
                                                 method="post">
                                                 @method('put')
                                                 @csrf
@@ -457,22 +463,14 @@
                                                         @enderror
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="room_code">Kode Ruang</label>
+                                                        <label for="room_number">Nomor Ruang</label>
                                                         <input type="text"
-                                                            value="{{ old('room_code', $room->room_code) }}"
-                                                            class="form-control @error('room_code') is-invalid @enderror"
-                                                            id="room_code" name="room_code" placeholder="Kode Ruang"
+                                                            value="{{ old('room_number', $room->room_number) }}"
+                                                            class="form-control @error('room_number') is-invalid @enderror"
+                                                            id="room_number" name="room_number"
+                                                            placeholder="Nomor Ruang"
                                                             onkeyup="this.value = this.value.toUpperCase()">
-                                                        @error('room_code')
-                                                        <div class="invalid-feedback">{{ $message }}</div>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="floor">Lantai</label>
-                                                        <input type="number" value="{{ old('floor', $room->floor) }}"
-                                                            class="form-control @error('floor') is-invalid @enderror"
-                                                            id="floor" name="floor" placeholder="Lantai">
-                                                        @error('floor')
+                                                        @error('room_number')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
                                                     </div>
@@ -493,9 +491,9 @@
                             </tbody>
                             <tfoot>
                                 <tr>
+                                    <th>No</th>
                                     <th>Nama Ruang</th>
-                                    <th>Kode Ruang</th>
-                                    <th>Lantai</th>
+                                    <th>Nomor Ruang</th>
                                     <th>Aksi</th>
                                 </tr>
                             </tfoot>
@@ -511,8 +509,9 @@
 <div class="modal fade" id="default-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <form autocomplete="off" novalidate action="/rooms" method="post">
+            <form autocomplete="off" novalidate action="/ruangan" method="post">
                 @csrf
+                <input type="hidden" name="kelas_rawat_id" value="{{ $kelas_rawat->id }}">
                 <div class="modal-header">
                     <h5 class="modal-title">Tambah Ruang</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -530,20 +529,12 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="room_code">Kode Ruang</label>
-                        <input type="text" value="{{ old('room_code') }}"
-                            class="form-control @error('room_code') is-invalid @enderror" id="room_code"
-                            name="room_code" placeholder="Kode Ruang" onkeyup="this.value = this.value.toUpperCase()">
-                        @error('room_code')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="floor">Lantai</label>
-                        <input type="number" value="{{ old('floor') }}"
-                            class="form-control @error('floor') is-invalid @enderror" id="floor" name="floor"
-                            placeholder="Lantai">
-                        @error('floor')
+                        <label for="room_number">Nomor Ruang</label>
+                        <input type="text" value="{{ old('room_number') }}"
+                            class="form-control @error('room_number') is-invalid @enderror" id="room_number"
+                            name="room_number" placeholder="Nomor Ruang"
+                            onkeyup="this.value = this.value.toUpperCase()">
+                        @error('room_number')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>

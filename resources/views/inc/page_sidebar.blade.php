@@ -44,9 +44,24 @@
                     <span class="nav-link-text" data-i18n="nav.application_dashboard">Dashboard</span>
                 </a>
             </li>
+
+            <li class="{{ set_active_mainmenu(['rawat-inap', 'kelas-rawat', 'intel_privacy', 'intel_build_notes']) }}">
+                <a href="#" title="Rawat inap" data-filter-tags="rawat inap">
+                    <i class="fal fa-bed"></i>
+                    <span class="nav-link-text" data-i18n="nav.rawat_inap">Rawat Inap</span>
+                </a>
+                <ul>
+                    <li class="{{ set_active('kelas-rawat') }}">
+                        <a href="/kelas-rawat" title="Kelas Rawat" data-filter-tags="rawat inap kelas rawat">
+                            <span class="nav-link-text" data-i18n="nav.application_kelas-rawat">Kelas Rawat</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
             @can('admin')
             <li class="{{ set_active('rooms') }}">
-                <a href="/rooms" title="Ruangan" data-filter-tags="application ruangan">
+                <a href="/rooms" title="" data-filter-tags="application ruangan">
                     <i class="fal fa-home"></i>
                     <span class="nav-link-text" data-i18n="nav.application_ruangan">Ruangan</span>
                 </a>

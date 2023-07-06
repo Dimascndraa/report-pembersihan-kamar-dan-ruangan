@@ -5,14 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BarangCategory extends Model
+class Bed extends Model
 {
-    protected $guarded = ['id'];
-
     use HasFactory;
 
-    public function template_barang()
+    public function bed()
     {
-        return $this->hasMany(TemplateBarang::class);
+        return $this->belongsTo(Bed::class);
     }
 }

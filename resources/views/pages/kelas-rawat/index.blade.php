@@ -1,20 +1,15 @@
 @extends('inc.layout')
-@section('title', 'Kategori Barang')
+@section('title','Kelas Rawat')
 @section('content')
 <main id="js-page-content" role="main" class="page-content">
-    @include('inc.breadcrumb', ['bcrumb' => 'bc_level_dua', 'bc_1' => 'Datatables'])
+    @include('inc.breadcrumb',['bcrumb' => 'bc_level_dua','bc_1'=>'Datatables'])
     <div class="subheader">
-        @component('inc.subheader', ['subheader_title' => 'st_type_5'])
-        @slot('sh_icon')
-        table
-        @endslot
-        @slot('sh_titile_main')
-        DataTables: <span class='fw-300'>Kategori Barang</span> <sup class='badge badge-primary fw-500'>ADDON</sup>
-        @endslot
-        @slot('sh_descipt')
-        Create headache free searching, sorting and pagination tables without any complex
-        configuration
-        @endslot
+        @component('inc.subheader',['subheader_title'=>'st_type_5'])
+        @slot('sh_icon') table @endslot
+        @slot('sh_titile_main') DataTables: <span class='fw-300'>Kelas Rawat</span> <sup
+            class='badge badge-primary fw-500'>ADDON</sup> @endslot
+        @slot('sh_descipt') Create headache free searching, sorting and pagination tables without any complex
+        configuration @endslot
         @endcomponent
     </div>
     <div class="row mb-5">
@@ -22,7 +17,7 @@
             <button type="button" class="btn btn-primary waves-effect waves-themed" data-toggle="modal"
                 data-target="#default-example-modal-lg">
                 <span class="fal fa-plus-circle mr-1"></span>
-                Tambah Kategori Barang
+                Tambah Kelas Rawat
             </button>
         </div>
     </div>
@@ -32,7 +27,7 @@
             <div id="panel-1" class="panel">
                 <div class="panel-hdr">
                     <h2>
-                        Table <span class="fw-300"><i>Kategori Barang</i></span>
+                        Rooms <span class="fw-300"><i>Table</i></span>
                     </h2>
                     <div class="panel-toolbar">
                         <button class="btn btn-primary btn-sm" data-toggle="dropdown">Table Style</button>
@@ -407,46 +402,51 @@
                         <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
                             <thead>
                                 <tr>
-                                    <th>Nama Kategori</th>
-                                    <th>Kode Kategori</th>
-                                    <th>Kode Angka</th>
+                                    <th>No</th>
+                                    <th>Nama Kelas Rawat</th>
+                                    <th>Jumlah Ruang</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($categories as $category)
+                                @foreach ($kelas_rawat as $kelas)
                                 <tr>
-                                    <td style="white-space: normal"><a href="categories/{{ $category->id }}">{{
-                                            $category->name }}</a></td>
-                                    <td style="white-space: normal">{{ $category->category_code }}</td>
-                                    <td style="white-space: normal">{{ $category->category_number_code }}</td>
+                                    <td style="white-space: normal">{{ $loop->iteration }}</td>
+                                    <td style="white-space: normal"><a href="/ruangan/{{ $kelas->id }}" class="">{{
+                                            $kelas->name }}</a></td>
+                                    <td style="white-space: normal">{{
+                                        count($kelas->ruangan) }}</td>
                                     <td style="white-space: normal">
+                                        <a href="/ruangan/{{ $kelas->id }}" style="transform: scale(1.1)"
+                                            class="badge mx-1 badge-warning p-2 border-0 text-white"><i
+                                                class='bx bx-door-open' style="transform: scale(1.5)"
+                                                title="Kelola Ruangan"></i></a>
                                         <button type="button" class="badge mx-1 badge-primary p-2 border-0 text-white"
-                                            data-toggle="modal" data-target="#ubah-kategori{{ $category->id }}"
+                                            data-toggle="modal" data-target="#ubah-kelas-rawat{{ $kelas->id }}"
                                             title="Ubah">
                                             <span class="fal fa-pencil mr-1"></span>
                                         </button>
-                                        <form action="/categories/{{ $category->id }}" method="POST" class="d-inline">
+                                        <form action="/kelas-rawat/{{ $kelas->id }}" method="POST" class="d-inline">
                                             @method('delete')
                                             @csrf
-                                            <button title="Hapus Kategori" class="badge mx-1 badge-danger p-2 border-0"
+                                            <button title="Hapus Kelas Rawat"
+                                                class="badge mx-1 badge-danger p-2 border-0"
                                                 onclick="return confirm('Anda takin?')">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </form>
                                     </td>
                                 </tr>
-
-                                <div class="modal fade" id="ubah-kategori{{ $category->id }}" tabindex="-1"
+                                <div class="modal fade" id="ubah-kelas-rawat{{ $kelas->id }}" tabindex="-1"
                                     role="dialog" aria-hidden="true">
                                     <div class="modal-dialog modal-lg" role="document">
                                         <div class="modal-content">
-                                            <form autocomplete="off" novalidate action="/categories/{{ $category->id }}"
+                                            <form autocomplete="off" novalidate action="/kelas-rawat/{{ $kelas->id }}"
                                                 method="post">
                                                 @method('put')
                                                 @csrf
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title">Ubah Kategori</h5>
+                                                    <h5 class="modal-title">Ubah Kelas Rawat</h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true"><i class="fal fa-times"></i></span>
@@ -454,34 +454,11 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="form-group">
-                                                        <label for="name">Nama Kategori</label>
-                                                        <input type="text" value="{{ old('name', $category->name) }}"
+                                                        <label for="name">Nama Kelas Rawat</label>
+                                                        <input type="text" value="{{ old('name', $kelas->name) }}"
                                                             class="form-control @error('name') is-invalid @enderror"
-                                                            id="name" name="name" placeholder="Nama Kategori">
+                                                            id="name" name="name" placeholder="Nama Kelas Rawat">
                                                         @error('name')
-                                                        <div class="invalid-feedback">{{ $message }}</div>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="category_code">Kode Kategori</label>
-                                                        <input type="text"
-                                                            value="{{ old('category_code', $category->category_code) }}"
-                                                            class="form-control @error('category_code') is-invalid @enderror"
-                                                            id="category_code" name="category_code"
-                                                            placeholder="Kode Kategori"
-                                                            onkeyup="this.value = this.value.toUpperCase()">
-                                                        @error('category_code')
-                                                        <div class="invalid-feedback">{{ $message }}</div>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="category_number_code">Kode Angka</label>
-                                                        <input type="number"
-                                                            value="{{ old('category_number_code', $category->category_number_code) }}"
-                                                            class="form-control @error('category_number_code') is-invalid @enderror"
-                                                            id="category_number_code" name="category_number_code"
-                                                            placeholder="Lantai">
-                                                        @error('category_number_code')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
                                                     </div>
@@ -502,9 +479,9 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Nama Kategori</th>
-                                    <th>Kode Kategori</th>
-                                    <th>Lantai</th>
+                                    <th>No</th>
+                                    <th>Nama Kelas Rawat</th>
+                                    <th>Jumlah Ruang</th>
                                     <th>Aksi</th>
                                 </tr>
                             </tfoot>
@@ -520,40 +497,21 @@
 <div class="modal fade" id="default-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <form autocomplete="off" novalidate action="/categories" method="post">
+            <form autocomplete="off" novalidate action="/kelas-rawat" method="post">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title">Tambah Kategori</h5>
+                    <h5 class="modal-title">Tambah Kelas Rawat</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"><i class="fal fa-times"></i></span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="name">Nama Kategori</label>
+                        <label for="name">Nama Kelas Rawat</label>
                         <input type="text" value="{{ old('name') }}"
                             class="form-control @error('name') is-invalid @enderror" id="name" name="name"
-                            placeholder="Nama Kategori">
+                            placeholder="Nama Kelas Rawat">
                         @error('name')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="category_code">Kode Kategori</label>
-                        <input type="text" value="{{ old('category_code') }}"
-                            class="form-control @error('category_code') is-invalid @enderror" id="category_code"
-                            name="category_code" placeholder="Kode Kategori"
-                            onkeyup="this.value = this.value.toUpperCase()">
-                        @error('category_code')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="category_number_code">Kode Angka</label>
-                        <input type="number" value="{{ old('category_number_code') }}"
-                            class="form-control @error('category_number_code') is-invalid @enderror"
-                            id="category_number_code" name="category_number_code" placeholder="Kode Angka">
-                        @error('category_number_code')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
